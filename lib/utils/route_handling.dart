@@ -10,6 +10,10 @@ class TomyTimerRouteHandling{
         return _goHome(settings);
       case TomyTimerRoutes.meeting:
         return _goMeeting(settings);
+      case TomyTimerRoutes.report:
+        return _goReport(settings);
+      case TomyTimerRoutes.pastMeetings:
+        return _goPastMeetings(settings);
       default:
         return MaterialPageRoute(
           builder: (context) {
@@ -33,6 +37,22 @@ class TomyTimerRouteHandling{
      return MaterialPageRoute(
       builder: (context){
         return const MeetingScreen();
+      }
+    );
+  }
+
+  static Route<dynamic> _goReport(RouteSettings settings){
+     return MaterialPageRoute(
+      builder: (context){
+        return const ReportScreen();
+      }
+    );
+  }
+
+  static Route<dynamic> _goPastMeetings(RouteSettings settings){
+     return MaterialPageRoute(
+      builder: (context){
+        return const PastMeetingsScreen();
       }
     );
   }

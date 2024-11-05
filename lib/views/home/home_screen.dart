@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              
+              Navigator.of(context).pushNamed(TomyTimerRoutes.pastMeetings);
             },
             child: const Text('Ver reuniones pasadas'),
           ),
