@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tomy_timer/utils/routes.dart';
+import 'package:tomy_timer/views/meeting/clock/clock_widget.dart';
+import 'package:tomy_timer/views/meeting/clock/cubit/clock_cubit.dart';
 
 class MeetingScreen extends StatelessWidget {
   const MeetingScreen({Key? key}) : super(key: key);
@@ -19,15 +22,25 @@ class MeetingScreen extends StatelessWidget {
             const Column(
               children: [Text('Contador de muletillas'), Text('Nitzu Higimani')],
             ),
-            const Text('Clock'),
+            const ClockWidget(),
             Column(
               children: [
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text('Back'),
-                    Text('Start/Resume'),
-                    Text('Stop/Next'),
+                    const Text('Back'),
+                    ElevatedButton(
+                      onPressed: () async {
+                        context.read<ClockCubit>().start();
+                      },
+                      child: const Text('Start/Resume'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.read<ClockCubit>().stop();
+                      },
+                      child: const Text('Stop/Next'),
+                    ),
                   ],
                 ),
                 ElevatedButton(
