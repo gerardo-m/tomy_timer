@@ -18,6 +18,11 @@ class ClockCubit extends Cubit<ClockState> {
 
   StreamSubscription<Duration>? _clockSubscription;
 
+  void load(){
+    reset();
+    emit(ClockValid(duration: Duration.zero, startTime: _startTime));
+  }
+
   Future<void> start() async{
     if (!_started){
       // _running = true;

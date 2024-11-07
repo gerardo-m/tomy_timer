@@ -20,9 +20,13 @@ class ClockWidget extends StatelessWidget {
     return ClockBlocBuilder(
       builder: (context, state) {
         return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(state.duration.tommssxx(), style: _mainText,),
-            Text('04:00', style: _secondText),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              child: Text(state.duration.tommssxx(), style: _mainText,),
+            ),
+            Text('Próximo hito: 04:00', style: _secondText),
           ],
         );
       },

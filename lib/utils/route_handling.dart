@@ -37,7 +37,7 @@ class TomyTimerRouteHandling {
       return MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => ClockCubit(),
+            create: (context) => ClockCubit()..load(),
           ),
         ],
         child: const MeetingScreen(),
