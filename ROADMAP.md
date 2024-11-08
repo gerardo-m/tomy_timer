@@ -16,10 +16,10 @@
 
 ## Tasks until launch:
 
-- Finish UI for the Meeting screen
+- ~~Finish UI for the Meeting screen~~
     - ~~Initial clock state should show 00:00:00~~
     - ~~Make the name and the role bigger~~
-    - Complete the buttons look
-    - Add color
-- Create models: meeting, meeting_item, report
+    - ~~Complete the buttons look~~
+    - ~~Add color~~
+- ~~Create models: meeting, meeting_item, report~~
 - Implement the new meeting functionality

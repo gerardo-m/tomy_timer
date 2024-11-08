@@ -110,7 +110,17 @@ class TomyTimerTheme {
       colorScheme: lightColorScheme,
       cardTheme: cardTheme.copyWith(
         surfaceTintColor: lightColorScheme.surfaceTint,
-      )
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStatePropertyAll(lightColorScheme.primary),
+          foregroundColor: WidgetStatePropertyAll(lightColorScheme.onPrimary),
+        ),
+      ),
+      appBarTheme: AppBarTheme(
+        backgroundColor: lightColorScheme.secondary,
+        foregroundColor: lightColorScheme.onSecondary,
+      ),
     );
   }
 
@@ -119,7 +129,17 @@ class TomyTimerTheme {
       colorScheme: darkColorScheme,
       cardTheme: cardTheme.copyWith(
         surfaceTintColor: darkColorScheme.surfaceTint,
-      )
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStatePropertyAll(lightColorScheme.primary),
+          foregroundColor: WidgetStatePropertyAll(lightColorScheme.onPrimary),
+        ),
+      ),
+      appBarTheme: AppBarTheme(
+        backgroundColor: lightColorScheme.secondary,
+        foregroundColor: lightColorScheme.onSecondary,
+      ),
     );
   }
 }

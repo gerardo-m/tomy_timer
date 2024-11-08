@@ -17,8 +17,8 @@ import 'dependency_injection.dart' as di;
     Widget build(BuildContext context) {
       return MaterialApp(
         title: 'Flutter Project Demo',
-        theme: TomyTimerTheme.lightTheme,
-        darkTheme: TomyTimerTheme.darkTheme,
+        theme: TomyTimerTheme.darkTheme,
+        // darkTheme: TomyTimerTheme.darkTheme,
         onGenerateRoute: TomyTimerRouteHandling.onGenerateRoute,
       );
     }
