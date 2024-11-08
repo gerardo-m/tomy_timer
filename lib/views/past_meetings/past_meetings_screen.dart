@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PastMeetingsScreen extends StatelessWidget{
-  const PastMeetingsScreen({Key? key}) : super(key: key);
+  const PastMeetingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

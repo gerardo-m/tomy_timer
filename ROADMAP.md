@@ -22,4 +22,9 @@
     - ~~Complete the buttons look~~
     - ~~Add color~~
 - ~~Create models: meeting, meeting_item, report~~
+- Implement isar
 - Implement the new meeting functionality
+    - Create a meeting instance
+    - Create an empty meeting item instance
+    - Implement edit role and name
+    - Implement edit milestones

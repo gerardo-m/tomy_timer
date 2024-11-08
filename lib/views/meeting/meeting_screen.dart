@@ -6,7 +6,7 @@ import 'package:tomy_timer/views/meeting/clock/clock_widget.dart';
 import 'package:tomy_timer/views/meeting/clock/cubit/clock_cubit.dart';
 
 class MeetingScreen extends StatelessWidget {
-  const MeetingScreen({Key? key}) : super(key: key);
+  const MeetingScreen({super.key});
 
   final _roleText = const TextStyle(fontSize: 24);
   final _nameText = const TextStyle(fontSize: 20);
