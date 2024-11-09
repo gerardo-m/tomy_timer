@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 
 class MeetingItem {
   int id;
@@ -25,6 +26,10 @@ class MeetingItem {
     required this.redTime,
     this.color,
   });
+
+  factory MeetingItem.createEmptyMeetingItem(){
+    return MeetingItem(id: Isar.autoIncrement, name: 'Nombre', role: 'Rol', duration: Duration.zero, startTime: DateTime.now(), redTime: const Duration(minutes: 1));
+  }
 
   EMeetingItem toEMeetingItem() {
     return EMeetingItem(

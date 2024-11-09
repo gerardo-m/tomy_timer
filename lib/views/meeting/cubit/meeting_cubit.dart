@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tomy_timer/models/meeting.dart';
+import 'package:tomy_timer/models/meeting_item.dart';
 import 'package:tomy_timer/services/meetings_service.dart';
 import 'package:tomy_timer/views/widgets/rich_bloc_builder.dart';
 
@@ -14,6 +15,8 @@ class MeetingCubit extends Cubit<MeetingState> {
   final MeetingsService _meetingsService = GetIt.instance.get<MeetingsService>();
 
   Meeting _meeting = Meeting.createEmptyMeeting();
+  int _selectedItem = 0;
+  final List<MeetingItem> _meetingItems = [];
 
   Future<void> load(int? id) async{
     if (id != null){
@@ -24,7 +27,31 @@ class MeetingCubit extends Cubit<MeetingState> {
         _meeting = cand;
       }
     }
+    _newMeetingItem();
     _emitValidState();
+  }
+
+  Future<void> changeName(String name)async{
+    _meetingItems[_selectedItem].name = name;
+    // TODO save
+    _emitValidState();
+  }
+
+  Future<void> changeRole(String role)async{
+    _meetingItems[_selectedItem].role = role;
+    // TODO save
+    _emitValidState();
+  }
+
+  Future<void> addMeetingItem()async{
+    _newMeetingItem();
+    _selectedItem = _meetingItems.length - 1;
+    _emitValidState();
+  }
+
+  Future<void> _newMeetingItem() async{
+    MeetingItem item = MeetingItem.createEmptyMeetingItem();
+    _meetingItems.add(item);
   }
 
   // void _loading(){
@@ -35,7 +62,8 @@ class MeetingCubit extends Cubit<MeetingState> {
   // }
 
   void _emitValidState(){
-    emit(MeetingValid(meeting: _meeting.toEMeeting()));
+    List<EMeetingItem> eMeetingItems = _meetingItems.map((e) => e.toEMeetingItem(),).toList();
+    emit(MeetingValid(meeting: _meeting.toEMeeting(), meetingItems: eMeetingItems, selectedItem: _selectedItem));
   }
   
 }

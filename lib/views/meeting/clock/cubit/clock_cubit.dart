@@ -16,11 +16,13 @@ class ClockCubit extends Cubit<ClockState> {
   DateTime _startTime = DateTime.now();
   // Duration _duration = Duration.zero;
 
+  Duration _nextMilestone = Duration(minutes: 1);
+
   StreamSubscription<Duration>? _clockSubscription;
 
   void load(){
     reset();
-    emit(ClockValid(duration: Duration.zero, startTime: _startTime));
+    emit(ClockValid(duration: Duration.zero, startTime: _startTime, nextMilestone: _nextMilestone));
   }
 
   Future<void> start() async{
@@ -29,7 +31,7 @@ class ClockCubit extends Cubit<ClockState> {
       _started = true;
       _startTime = DateTime.now();
       _clockSubscription?.cancel();
-      _clockSubscription = _tick().listen((duration) => emit(ClockValid(duration: duration, startTime: _startTime)),);
+      _clockSubscription = _tick().listen((duration) => emit(ClockValid(duration: duration, startTime: _startTime, nextMilestone: _nextMilestone)),);
     }
   }
 
