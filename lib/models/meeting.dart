@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:isar/isar.dart';
 import 'package:tomy_timer/utils/constants.dart';
- part 'meeting.g.dart';
+part 'meeting.g.dart';
 
 @collection
 class Meeting {

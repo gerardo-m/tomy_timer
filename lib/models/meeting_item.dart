@@ -1,47 +1,56 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
+part 'meeting_item.g.dart';
 
+@collection
 class MeetingItem {
-  int id;
+  Id id;
   String name;
   String role;
-  Duration duration;
+  int iduration;
   DateTime startTime;
 
-  Duration? greenTime;
-  Duration? ambarTime;
-  Duration redTime;
+  int? greenTime;
+  int? ambarTime;
+  int redTime;
 
-  Color? color;
+  int meetingId;
 
   MeetingItem({
     required this.id,
     required this.name,
     required this.role,
-    required this.duration,
+    required this.iduration,
     required this.startTime,
     this.greenTime,
     this.ambarTime,
     required this.redTime,
-    this.color,
+    required this.meetingId,
   });
 
-  factory MeetingItem.createEmptyMeetingItem(){
-    return MeetingItem(id: Isar.autoIncrement, name: 'Nombre', role: 'Rol', duration: Duration.zero, startTime: DateTime.now(), redTime: const Duration(minutes: 1));
+  factory MeetingItem.createEmptyMeetingItem(int meetingId){
+    return MeetingItem(id: Isar.autoIncrement, name: 'Nombre', role: 'Rol', iduration: 0, startTime: DateTime.now(), redTime: const Duration(minutes: 1).inMilliseconds, meetingId: meetingId);
   }
+
+  @ignore
+  Duration? get greenDuration => greenTime != null ? Duration(milliseconds: greenTime!) : null;
+  @ignore
+  Duration? get ambarDuration => ambarTime != null ? Duration(milliseconds: ambarTime!) : null;
+  @ignore
+  Duration get redDuration => Duration(milliseconds: redTime);
+  @ignore
+  Duration get duration => Duration(milliseconds: iduration);
 
   EMeetingItem toEMeetingItem() {
     return EMeetingItem(
       id: id,
       name: name,
       role: role,
-      duration: duration,
+      iduration: iduration,
       startTime: startTime,
       greenTime: greenTime,
       ambarTime: ambarTime,
       redTime: redTime,
-      color: color,
     );
   }
 }
@@ -50,27 +59,29 @@ class EMeetingItem with EquatableMixin {
   final int id;
   final String name;
   final String role;
-  final Duration duration;
+  final int iduration;
   final DateTime startTime;
 
-  final Duration? greenTime;
-  final Duration? ambarTime;
-  final Duration redTime;
-
-  final Color? color;
+  final int? greenTime;
+  final int? ambarTime;
+  final int redTime;
 
   EMeetingItem({
     required this.id,
     required this.name,
     required this.role,
-    required this.duration,
+    required this.iduration,
     required this.startTime,
     this.greenTime,
     this.ambarTime,
     required this.redTime,
-    this.color,
   });
 
+  Duration? get greenDuration => greenTime != null ? Duration(milliseconds: greenTime!) : null;
+  Duration? get ambarDuration => ambarTime != null ? Duration(milliseconds: ambarTime!) : null;
+  Duration get redDuration => Duration(milliseconds: redTime);
+  Duration get duration => Duration(milliseconds: iduration);
+
   @override
-  List<Object?> get props => [id, name, role, duration, startTime, greenTime, ambarTime, redTime, color];
+  List<Object?> get props => [id, name, role, iduration, startTime, greenTime, ambarTime, redTime];
 }

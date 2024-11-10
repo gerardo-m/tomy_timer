@@ -28,6 +28,9 @@
     - ~~Create an empty meeting item instance~~
     - ~~Implement edit role and name~~
     - ~~Implement edit milestones~~
-    - Implement meeting items service and repository
+    - ~~Implement meeting items service and repository~~
     - Implement save the meeting
 - Implement the current meeting button in home
+- Add a reset db option
+- Implement saving the time
+- Implement adding meeting items

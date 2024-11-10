@@ -60,9 +60,9 @@ class ClockWidget extends StatelessWidget {
           title: const Center(child: Text('Tiempos')),
           contentPadding: const EdgeInsets.all(8),
           children: [
-            DurationSpinbox(value: meetingItem.greenTime ?? Duration.zero),
-            DurationSpinbox(value: meetingItem.ambarTime ?? Duration.zero),
-            DurationSpinbox(value: meetingItem.redTime),
+            DurationSpinbox(value: meetingItem.greenDuration ?? Duration.zero),
+            DurationSpinbox(value: meetingItem.ambarDuration ?? Duration.zero),
+            DurationSpinbox(value: meetingItem.redDuration),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
