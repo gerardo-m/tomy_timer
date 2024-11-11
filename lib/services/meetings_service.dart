@@ -34,4 +34,8 @@ class MeetingsService {
   Future<void> deleteMeeting(int id) async {
     return meetingsRepository.deleteMeeting(id);
   }
+
+  Future<Meeting?> getCurrentMeeting() async{
+    return meetingsRepository.getCurrentMeeting();
+  }
 }

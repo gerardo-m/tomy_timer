@@ -47,5 +47,10 @@ class MeetingsRepositoryIsar extends MeetingsRepository {
   Future<List<Meeting>> getAllMeetings() {
     return isar.meetings.where().findAll();
   }
+  
+  @override
+  Future<Meeting?> getCurrentMeeting() {
+    return isar.meetings.filter().currentEqualTo(true).findFirst();
+  }
 
 }

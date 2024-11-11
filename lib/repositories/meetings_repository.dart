@@ -7,4 +7,6 @@ abstract class MeetingsRepository{
   Future<Meeting?> updateMeeting(Meeting meeting);
   Future<void> deleteMeeting(int meetingId);
   Future<List<Meeting>> getAllMeetings();
+
+  Future<Meeting?> getCurrentMeeting();
 }

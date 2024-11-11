@@ -10,6 +10,7 @@ import 'package:tomy_timer/repositories_isar/meeting_items_repository_isar.dart'
 import 'package:tomy_timer/repositories_isar/meetings_repository_isar.dart';
 import 'package:tomy_timer/services/meeting_items_service.dart';
 import 'package:tomy_timer/services/meetings_service.dart';
+import 'package:tomy_timer/utils/utils.dart';
 
 final di = GetIt.instance;
 
@@ -19,18 +20,12 @@ Future<bool?> setup() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupIsar();
 
-  di.registerLazySingleton<MeetingsRepository>(
-    () => MeetingsRepositoryIsar(di()),
-  );
-  di.registerLazySingleton<MeetingItemsRepository>(
-    () => MeetingItemsRepositoryIsar(di()),
-  );
+  di.registerLazySingleton<MeetingsRepository>(() => MeetingsRepositoryIsar(di()));
+  di.registerLazySingleton<MeetingItemsRepository>(() => MeetingItemsRepositoryIsar(di()));
 
   // Register your services here
   di.registerLazySingleton<MeetingsService>(() => MeetingsService(di()));
-  di.registerLazySingleton<MeetingItemsService>(
-    () => MeetingItemsService(di()),
-  );
+  di.registerLazySingleton<MeetingItemsService>(() => MeetingItemsService(di()));
   return true;
 }
 
@@ -42,6 +37,7 @@ Future<Isar> setupIsar() async {
       MeetingItemSchema,
     ],
     directory: dir.path,
+    name: Constants.dbName,
   );
   di.registerSingleton<Isar>(
     isar,

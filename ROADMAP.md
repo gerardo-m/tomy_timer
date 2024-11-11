@@ -29,8 +29,21 @@
     - ~~Implement edit role and name~~
     - ~~Implement edit milestones~~
     - ~~Implement meeting items service and repository~~
-    - Implement save the meeting
-- Implement the current meeting button in home
-- Add a reset db option
+    - ~~Implement save the meeting~~
+- ~~Implement the current meeting button in home~~
+- ~~Add a reset db option~~
 - Implement saving the time
 - Implement adding meeting items
+    - Meeting item: speaker and no speaker
+    - Load time depending on speaker or no speaker
+- Implement color changes
+- Implement report
+    - report model
+    - report services and repository
+    - generate report data
+- Template
+    - Template model
+    - Template item
+    - Template service and repository
+    - Load template
+- Import from Tomy
