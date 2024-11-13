@@ -45,6 +45,7 @@ class ClockCubit extends Cubit<ClockState> {
     _startTime = DateTime.now();
     // _running = false;
     _started = false;
+    emit(ClockValid(duration: Duration.zero, startTime: _startTime, nextMilestone: _nextMilestone));
   }
 
   // void _loading(){

@@ -26,6 +26,11 @@ const MeetingSchema = CollectionSchema(
       id: 1,
       name: r'date',
       type: IsarType.dateTime,
+    ),
+    r'startingTime': PropertySchema(
+      id: 2,
+      name: r'startingTime',
+      type: IsarType.dateTime,
     )
   },
   estimateSize: _meetingEstimateSize,
@@ -59,6 +64,7 @@ void _meetingSerialize(
 ) {
   writer.writeBool(offsets[0], object.current);
   writer.writeDateTime(offsets[1], object.date);
+  writer.writeDateTime(offsets[2], object.startingTime);
 }
 
 Meeting _meetingDeserialize(
@@ -71,6 +77,7 @@ Meeting _meetingDeserialize(
     current: reader.readBoolOrNull(offsets[0]) ?? true,
     date: reader.readDateTime(offsets[1]),
     id: id,
+    startingTime: reader.readDateTimeOrNull(offsets[2]),
   );
   return object;
 }
@@ -86,6 +93,8 @@ P _meetingDeserializeProp<P>(
       return (reader.readBoolOrNull(offset) ?? true) as P;
     case 1:
       return (reader.readDateTime(offset)) as P;
+    case 2:
+      return (reader.readDateTimeOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -294,6 +303,76 @@ extension MeetingQueryFilter
       ));
     });
   }
+
+  QueryBuilder<Meeting, Meeting, QAfterFilterCondition> startingTimeIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'startingTime',
+      ));
+    });
+  }
+
+  QueryBuilder<Meeting, Meeting, QAfterFilterCondition>
+      startingTimeIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'startingTime',
+      ));
+    });
+  }
+
+  QueryBuilder<Meeting, Meeting, QAfterFilterCondition> startingTimeEqualTo(
+      DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'startingTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Meeting, Meeting, QAfterFilterCondition> startingTimeGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'startingTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Meeting, Meeting, QAfterFilterCondition> startingTimeLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'startingTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Meeting, Meeting, QAfterFilterCondition> startingTimeBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'startingTime',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension MeetingQueryObject
@@ -324,6 +403,18 @@ extension MeetingQuerySortBy on QueryBuilder<Meeting, Meeting, QSortBy> {
   QueryBuilder<Meeting, Meeting, QAfterSortBy> sortByDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Meeting, Meeting, QAfterSortBy> sortByStartingTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'startingTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Meeting, Meeting, QAfterSortBy> sortByStartingTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'startingTime', Sort.desc);
     });
   }
 }
@@ -365,6 +456,18 @@ extension MeetingQuerySortThenBy
       return query.addSortBy(r'id', Sort.desc);
     });
   }
+
+  QueryBuilder<Meeting, Meeting, QAfterSortBy> thenByStartingTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'startingTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Meeting, Meeting, QAfterSortBy> thenByStartingTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'startingTime', Sort.desc);
+    });
+  }
 }
 
 extension MeetingQueryWhereDistinct
@@ -378,6 +481,12 @@ extension MeetingQueryWhereDistinct
   QueryBuilder<Meeting, Meeting, QDistinct> distinctByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'date');
+    });
+  }
+
+  QueryBuilder<Meeting, Meeting, QDistinct> distinctByStartingTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'startingTime');
     });
   }
 }
@@ -399,6 +508,12 @@ extension MeetingQueryProperty
   QueryBuilder<Meeting, DateTime, QQueryOperations> dateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'date');
+    });
+  }
+
+  QueryBuilder<Meeting, DateTime?, QQueryOperations> startingTimeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'startingTime');
     });
   }
 }

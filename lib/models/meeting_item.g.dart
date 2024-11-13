@@ -52,8 +52,14 @@ const MeetingItemSchema = CollectionSchema(
       name: r'role',
       type: IsarType.string,
     ),
-    r'startTime': PropertySchema(
+    r'roleType': PropertySchema(
       id: 7,
+      name: r'roleType',
+      type: IsarType.byte,
+      enumMap: _MeetingItemroleTypeEnumValueMap,
+    ),
+    r'startTime': PropertySchema(
+      id: 8,
       name: r'startTime',
       type: IsarType.dateTime,
     )
@@ -96,7 +102,8 @@ void _meetingItemSerialize(
   writer.writeString(offsets[4], object.name);
   writer.writeLong(offsets[5], object.redTime);
   writer.writeString(offsets[6], object.role);
-  writer.writeDateTime(offsets[7], object.startTime);
+  writer.writeByte(offsets[7], object.roleType.index);
+  writer.writeDateTime(offsets[8], object.startTime);
 }
 
 MeetingItem _meetingItemDeserialize(
@@ -114,7 +121,10 @@ MeetingItem _meetingItemDeserialize(
     name: reader.readString(offsets[4]),
     redTime: reader.readLong(offsets[5]),
     role: reader.readString(offsets[6]),
-    startTime: reader.readDateTime(offsets[7]),
+    roleType:
+        _MeetingItemroleTypeValueEnumMap[reader.readByteOrNull(offsets[7])] ??
+            RoleType.speaker,
+    startTime: reader.readDateTime(offsets[8]),
   );
   return object;
 }
@@ -141,11 +151,23 @@ P _meetingItemDeserializeProp<P>(
     case 6:
       return (reader.readString(offset)) as P;
     case 7:
+      return (_MeetingItemroleTypeValueEnumMap[reader.readByteOrNull(offset)] ??
+          RoleType.speaker) as P;
+    case 8:
       return (reader.readDateTime(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
+
+const _MeetingItemroleTypeEnumValueMap = {
+  'speaker': 0,
+  'nonSpeaker': 1,
+};
+const _MeetingItemroleTypeValueEnumMap = {
+  0: RoleType.speaker,
+  1: RoleType.nonSpeaker,
+};
 
 Id _meetingItemGetId(MeetingItem object) {
   return object.id;
@@ -869,6 +891,61 @@ extension MeetingItemQueryFilter
     });
   }
 
+  QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition> roleTypeEqualTo(
+      RoleType value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'roleType',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition>
+      roleTypeGreaterThan(
+    RoleType value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'roleType',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition>
+      roleTypeLessThan(
+    RoleType value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'roleType',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition> roleTypeBetween(
+    RoleType lower,
+    RoleType upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'roleType',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition>
       startTimeEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
@@ -1018,6 +1095,18 @@ extension MeetingItemQuerySortBy
     });
   }
 
+  QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy> sortByRoleType() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'roleType', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy> sortByRoleTypeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'roleType', Sort.desc);
+    });
+  }
+
   QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy> sortByStartTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startTime', Sort.asc);
@@ -1129,6 +1218,18 @@ extension MeetingItemQuerySortThenBy
     });
   }
 
+  QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy> thenByRoleType() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'roleType', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy> thenByRoleTypeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'roleType', Sort.desc);
+    });
+  }
+
   QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy> thenByStartTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startTime', Sort.asc);
@@ -1188,6 +1289,12 @@ extension MeetingItemQueryWhereDistinct
     });
   }
 
+  QueryBuilder<MeetingItem, MeetingItem, QDistinct> distinctByRoleType() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'roleType');
+    });
+  }
+
   QueryBuilder<MeetingItem, MeetingItem, QDistinct> distinctByStartTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'startTime');
@@ -1242,6 +1349,12 @@ extension MeetingItemQueryProperty
   QueryBuilder<MeetingItem, String, QQueryOperations> roleProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'role');
+    });
+  }
+
+  QueryBuilder<MeetingItem, RoleType, QQueryOperations> roleTypeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'roleType');
     });
   }
 

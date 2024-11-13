@@ -6,6 +6,7 @@ import 'package:tomy_timer/models/meeting.dart';
 import 'package:tomy_timer/models/meeting_item.dart';
 import 'package:tomy_timer/services/meeting_items_service.dart';
 import 'package:tomy_timer/services/meetings_service.dart';
+import 'package:tomy_timer/utils/enums.dart';
 import 'package:tomy_timer/views/widgets/rich_bloc_builder.dart';
 
 part 'meeting_state.dart';
@@ -13,8 +14,8 @@ part 'meeting_state.dart';
 class MeetingCubit extends Cubit<MeetingState> {
   MeetingCubit() : super(MeetingInitial());
 
-  final MeetingsService _meetingsService = GetIt.instance.get<MeetingsService>();
-  final MeetingItemsService _meetingItemsService = GetIt.instance.get<MeetingItemsService>();
+  MeetingsService get _meetingsService => GetIt.instance.get<MeetingsService>();
+  MeetingItemsService get _meetingItemsService => GetIt.instance.get<MeetingItemsService>();
 
   Meeting _meeting = Meeting.createEmptyMeeting();
   int _selectedItem = 0;
@@ -51,9 +52,44 @@ class MeetingCubit extends Cubit<MeetingState> {
     _emitValidState();
   }
 
+  Future<void> playAction() async{
+    MeetingItem item = _meetingItems[_selectedItem];
+    item.startTime = DateTime.now();
+    await _meetingItemsService.saveMeetingItem(item);
+  }
+
+  Future<void> stopNextAction()async{
+    MeetingItem item = _meetingItems[_selectedItem];
+    DateTime currentTime = DateTime.now();
+    item.iduration = currentTime.difference(item.startTime).inMilliseconds;
+    await _meetingItemsService.saveMeetingItem(item);
+    _selectedItem++;
+    if (_selectedItem >= _meetingItems.length){
+      _newMeetingItem();
+    }
+    _emitValidState();
+  }
+
   Future<void> addMeetingItem()async{
     _newMeetingItem();
     _selectedItem = _meetingItems.length - 1;
+    _emitValidState();
+  }
+
+  Future<void> setMilestones(RoleType roleType)async{
+    MeetingItem item = _meetingItems[_selectedItem];
+    if (roleType == RoleType.speaker){
+      item.greenTime = const Duration(minutes: 5).inMilliseconds;
+      item.ambarTime = const Duration(minutes: 6).inMilliseconds;
+      item.redTime = const Duration(minutes: 7).inMilliseconds;
+    }
+    if (roleType == RoleType.nonSpeaker){
+      item.greenTime = null;
+      item.ambarTime = null;
+      item.redTime = const Duration(minutes: 1).inMilliseconds;
+    }
+    item.roleType = roleType;
+    await _meetingItemsService.saveMeetingItem(item);
     _emitValidState();
   }
 

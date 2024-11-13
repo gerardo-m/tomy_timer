@@ -32,11 +32,13 @@
     - ~~Implement save the meeting~~
 - ~~Implement the current meeting button in home~~
 - ~~Add a reset db option~~
-- Implement saving the time
+- ~~Implement saving the time~~
 - Implement adding meeting items
-    - Meeting item: speaker and no speaker
-    - Load time depending on speaker or no speaker
+    - ~~Meeting item: speaker and no speaker~~
+    - ~~Load time depending on speaker or no speaker~~
 - Implement color changes
+    - Implement calculation of next milestone
+    - Implement the color change
 - Implement report
     - report model
     - report services and repository

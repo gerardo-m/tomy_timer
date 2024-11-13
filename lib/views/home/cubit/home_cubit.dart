@@ -10,7 +10,7 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
 
-  final MeetingsService _meetingsService = GetIt.instance.get<MeetingsService>();
+  MeetingsService get _meetingsService => GetIt.instance.get<MeetingsService>();
 
   Meeting? _currentMeeting;
 

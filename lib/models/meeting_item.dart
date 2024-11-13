@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:isar/isar.dart';
+import 'package:tomy_timer/utils/enums.dart';
 part 'meeting_item.g.dart';
 
 @collection
@@ -9,6 +10,9 @@ class MeetingItem {
   String role;
   int iduration;
   DateTime startTime;
+  
+  @enumerated
+  RoleType roleType;
 
   int? greenTime;
   int? ambarTime;
@@ -22,6 +26,7 @@ class MeetingItem {
     required this.role,
     required this.iduration,
     required this.startTime,
+    required this.roleType,
     this.greenTime,
     this.ambarTime,
     required this.redTime,
@@ -29,7 +34,7 @@ class MeetingItem {
   });
 
   factory MeetingItem.createEmptyMeetingItem(int meetingId){
-    return MeetingItem(id: Isar.autoIncrement, name: 'Nombre', role: 'Rol', iduration: 0, startTime: DateTime.now(), redTime: const Duration(minutes: 1).inMilliseconds, meetingId: meetingId);
+    return MeetingItem(id: Isar.autoIncrement, name: 'Nombre', role: 'Rol', iduration: 0, startTime: DateTime.now(), roleType: RoleType.nonSpeaker, redTime: const Duration(minutes: 1).inMilliseconds, meetingId: meetingId);
   }
 
   @ignore
@@ -48,6 +53,7 @@ class MeetingItem {
       role: role,
       iduration: iduration,
       startTime: startTime,
+      roleType: roleType,
       greenTime: greenTime,
       ambarTime: ambarTime,
       redTime: redTime,
@@ -61,6 +67,7 @@ class EMeetingItem with EquatableMixin {
   final String role;
   final int iduration;
   final DateTime startTime;
+  final RoleType roleType;
 
   final int? greenTime;
   final int? ambarTime;
@@ -72,6 +79,7 @@ class EMeetingItem with EquatableMixin {
     required this.role,
     required this.iduration,
     required this.startTime,
+    required this.roleType,
     this.greenTime,
     this.ambarTime,
     required this.redTime,
@@ -83,5 +91,5 @@ class EMeetingItem with EquatableMixin {
   Duration get duration => Duration(milliseconds: iduration);
 
   @override
-  List<Object?> get props => [id, name, role, iduration, startTime, greenTime, ambarTime, redTime];
+  List<Object?> get props => [id, name, role, iduration, startTime, roleType, greenTime, ambarTime, redTime];
 }

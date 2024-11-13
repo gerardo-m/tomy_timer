@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tomy_timer/utils/enums.dart';
 import 'package:tomy_timer/utils/routes.dart';
 import 'package:tomy_timer/views/home/cubit/home_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -20,10 +21,12 @@ class HomeScreen extends StatelessWidget {
                   child: Text('Ajustes'),
                 ),
               ],
-              onSelected: (value) {
+              onSelected: (value) async{
                 switch (value) {
                   case HomeScreenOptions.settings:
-                    Navigator.of(context).pushNamed(TomyTimerRoutes.settings);
+                    await Navigator.of(context).pushNamed(TomyTimerRoutes.settings);
+                    if (!context.mounted)return;
+                    context.read<HomeCubit>().load();
                     break;
                   default:
                 }
@@ -44,9 +47,12 @@ class HomeScreen extends StatelessWidget {
                       Text('Details'),
                     ],
                   ),
-                  onTap: () {
-                    Navigator.of(context)
-                        .pushNamed(TomyTimerRoutes.meeting, arguments: {"id": state.currentMeeting?.id});
+                  onTap: () async {
+                    await Navigator.of(context).pushNamed(TomyTimerRoutes.meeting, arguments: {
+                      "id": state.currentMeeting?.id,
+                    });
+                    if (!context.mounted)return;
+                    context.read<HomeCubit>().load();
                   },
                 ),
               ),
@@ -59,8 +65,10 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.of(context).pushNamed(TomyTimerRoutes.meeting);
+          onPressed: () async{
+            await Navigator.of(context).pushNamed(TomyTimerRoutes.meeting);
+            if (!context.mounted)return;
+            context.read<HomeCubit>().load();
           },
           label: const Text('Nueva reunion'),
           icon: const Icon(Icons.add),

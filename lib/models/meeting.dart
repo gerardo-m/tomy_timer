@@ -9,11 +9,13 @@ class Meeting {
   Id id = Isar.autoIncrement;
   DateTime date;
   bool current;
+  DateTime? startingTime;
 
   Meeting({
     required this.id,
     required this.date,
     this.current = true,
+    this.startingTime,
   });
 
   factory Meeting.createEmptyMeeting(){
@@ -21,7 +23,7 @@ class Meeting {
   }
 
   EMeeting toEMeeting(){
-    return EMeeting(id: id, date: date);
+    return EMeeting(id: id, date: date, current: current, startingTime: startingTime);
   }
 }
 
@@ -29,11 +31,15 @@ class EMeeting with EquatableMixin{
 
   final int id;
   final DateTime date;
+  final bool current;
+  final DateTime? startingTime;
   EMeeting({
     required this.id,
     required this.date,
+    required this.current,
+    this.startingTime,
   });
   
   @override
-  List<Object?> get props => [id, date];
+  List<Object?> get props => [id, date, current, startingTime];
 }
