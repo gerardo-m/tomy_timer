@@ -42,24 +42,29 @@ const MeetingItemSchema = CollectionSchema(
       name: r'name',
       type: IsarType.string,
     ),
-    r'redTime': PropertySchema(
+    r'orderNumber': PropertySchema(
       id: 5,
+      name: r'orderNumber',
+      type: IsarType.long,
+    ),
+    r'redTime': PropertySchema(
+      id: 6,
       name: r'redTime',
       type: IsarType.long,
     ),
     r'role': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'role',
       type: IsarType.string,
     ),
     r'roleType': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'roleType',
       type: IsarType.byte,
       enumMap: _MeetingItemroleTypeEnumValueMap,
     ),
     r'startTime': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'startTime',
       type: IsarType.dateTime,
     )
@@ -100,10 +105,11 @@ void _meetingItemSerialize(
   writer.writeLong(offsets[2], object.iduration);
   writer.writeLong(offsets[3], object.meetingId);
   writer.writeString(offsets[4], object.name);
-  writer.writeLong(offsets[5], object.redTime);
-  writer.writeString(offsets[6], object.role);
-  writer.writeByte(offsets[7], object.roleType.index);
-  writer.writeDateTime(offsets[8], object.startTime);
+  writer.writeLong(offsets[5], object.orderNumber);
+  writer.writeLong(offsets[6], object.redTime);
+  writer.writeString(offsets[7], object.role);
+  writer.writeByte(offsets[8], object.roleType.index);
+  writer.writeDateTime(offsets[9], object.startTime);
 }
 
 MeetingItem _meetingItemDeserialize(
@@ -119,12 +125,13 @@ MeetingItem _meetingItemDeserialize(
     iduration: reader.readLong(offsets[2]),
     meetingId: reader.readLong(offsets[3]),
     name: reader.readString(offsets[4]),
-    redTime: reader.readLong(offsets[5]),
-    role: reader.readString(offsets[6]),
+    orderNumber: reader.readLong(offsets[5]),
+    redTime: reader.readLong(offsets[6]),
+    role: reader.readString(offsets[7]),
     roleType:
-        _MeetingItemroleTypeValueEnumMap[reader.readByteOrNull(offsets[7])] ??
+        _MeetingItemroleTypeValueEnumMap[reader.readByteOrNull(offsets[8])] ??
             RoleType.speaker,
-    startTime: reader.readDateTime(offsets[8]),
+    startTime: reader.readDateTime(offsets[9]),
   );
   return object;
 }
@@ -149,11 +156,13 @@ P _meetingItemDeserializeProp<P>(
     case 5:
       return (reader.readLong(offset)) as P;
     case 6:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 7:
+      return (reader.readString(offset)) as P;
+    case 8:
       return (_MeetingItemroleTypeValueEnumMap[reader.readByteOrNull(offset)] ??
           RoleType.speaker) as P;
-    case 8:
+    case 9:
       return (reader.readDateTime(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -706,6 +715,62 @@ extension MeetingItemQueryFilter
     });
   }
 
+  QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition>
+      orderNumberEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'orderNumber',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition>
+      orderNumberGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'orderNumber',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition>
+      orderNumberLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'orderNumber',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition>
+      orderNumberBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'orderNumber',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition> redTimeEqualTo(
       int value) {
     return QueryBuilder.apply(this, (query) {
@@ -1071,6 +1136,18 @@ extension MeetingItemQuerySortBy
     });
   }
 
+  QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy> sortByOrderNumber() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderNumber', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy> sortByOrderNumberDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderNumber', Sort.desc);
+    });
+  }
+
   QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy> sortByRedTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'redTime', Sort.asc);
@@ -1194,6 +1271,18 @@ extension MeetingItemQuerySortThenBy
     });
   }
 
+  QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy> thenByOrderNumber() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderNumber', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy> thenByOrderNumberDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderNumber', Sort.desc);
+    });
+  }
+
   QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy> thenByRedTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'redTime', Sort.asc);
@@ -1276,6 +1365,12 @@ extension MeetingItemQueryWhereDistinct
     });
   }
 
+  QueryBuilder<MeetingItem, MeetingItem, QDistinct> distinctByOrderNumber() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'orderNumber');
+    });
+  }
+
   QueryBuilder<MeetingItem, MeetingItem, QDistinct> distinctByRedTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'redTime');
@@ -1337,6 +1432,12 @@ extension MeetingItemQueryProperty
   QueryBuilder<MeetingItem, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
+    });
+  }
+
+  QueryBuilder<MeetingItem, int, QQueryOperations> orderNumberProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'orderNumber');
     });
   }
 

@@ -8,4 +8,5 @@ abstract class MeetingItemsRepository{
   Future<void> deleteMeetingItem(int meetingItemId);
   Future<List<MeetingItem>> getMeetingItems(int meetingId);
   Future<List<MeetingItem>> getAllMeetingItems();
+  Future<MeetingItem?> getFromMeeting(int meetingId, int orderNumber);
 }

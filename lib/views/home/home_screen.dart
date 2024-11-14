@@ -66,9 +66,13 @@ class HomeScreen extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async{
-            await Navigator.of(context).pushNamed(TomyTimerRoutes.meeting);
+            int? newMeetingId = await context.read<HomeCubit>().createNewMeeting();
+            if (newMeetingId == null) return;
             if (!context.mounted)return;
-            context.read<HomeCubit>().load();
+            // context.read<ClockCubit>().reset();
+            await Navigator.of(context).pushNamed(TomyTimerRoutes.meeting, arguments: {"id": newMeetingId});
+            // if (!context.mounted)return;
+            // context.read<HomeCubit>().load();
           },
           label: const Text('Nueva reunion'),
           icon: const Icon(Icons.add),

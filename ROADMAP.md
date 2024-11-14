@@ -36,13 +36,16 @@
 - Implement adding meeting items
     - ~~Meeting item: speaker and no speaker~~
     - ~~Load time depending on speaker or no speaker~~
-- Implement color changes
-    - Implement calculation of next milestone
-    - Implement the color change
+- ~~Meeting and items creation should happen in home cubit~~
+- ~~Add selectedItem to meeting object~~
+- ~~Implement color changes~~
+    - ~~Implement calculation of next milestone~~
+    - ~~Implement the color change~~
 - Implement report
     - report model
     - report services and repository
     - generate report data
+- Implement Finish the meeting
 - Template
     - Template model
     - Template item

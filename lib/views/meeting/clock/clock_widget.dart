@@ -9,12 +9,10 @@ class ClockWidget extends StatelessWidget {
     super.key,
     this.startingDuration = Duration.zero,
     this.running = false,
-    required this.meetingItem,
   });
 
   final Duration startingDuration;
   final bool running;
-  final EMeetingItem meetingItem;
 
   final _mainText = const TextStyle(fontSize: 50, fontWeight: FontWeight.bold);
   final _secondText = const TextStyle(fontSize: 20);
@@ -23,30 +21,40 @@ class ClockWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClockBlocBuilder(
       builder: (context, state) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24),
-              child: Text(
-                state.duration.tommssxx(),
-                style: _mainText,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text('Próximo hito: ${state.nextMilestone.tommss()}', style: _secondText),
-                IconButton(
-                  onPressed: () {
-                    _showMilestoneDialog(context, meetingItem);
-                  },
-                  icon: const Icon(Icons.edit),
+        return Container(
+          
+          decoration: BoxDecoration(
+            color: state.color,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 24),
+                child: Text(
+                  state.duration.tommssxx(),
+                  style: _mainText,
                 ),
-              ],
-            ),
-          ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                      state.nextMilestone == Duration.zero
+                          ? '¡Se acabó el tiempo!'
+                          : 'Próximo hito: ${state.nextMilestone.tommss()}',
+                      style: _secondText),
+                  IconButton(
+                    onPressed: () {
+                      _showMilestoneDialog(context, state.meetingItem!);
+                    },
+                    icon: const Icon(Icons.edit),
+                  ),
+                ],
+              ),
+            ],
+          ),
         );
       },
     );

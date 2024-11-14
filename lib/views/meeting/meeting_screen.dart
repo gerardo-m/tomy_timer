@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dialog_helper/flutter_dialog_helper.dart';
-import 'package:tomy_timer/utils/routes.dart';
 import 'package:tomy_timer/utils/utils.dart';
 import 'package:tomy_timer/views/meeting/clock/clock_widget.dart';
 import 'package:tomy_timer/views/meeting/clock/cubit/clock_cubit.dart';
@@ -69,10 +68,9 @@ class MeetingScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Expanded(
-                  child: ClockWidget(
-                meetingItem: state.meetingItems[state.selectedItem],
-              )),
+              const Expanded(
+                child: ClockWidget(),
+              ),
               Column(
                 children: [
                   Row(
@@ -97,12 +95,13 @@ class MeetingScreen extends StatelessWidget {
                           await context.read<MeetingCubit>().stopNextAction();
                           if (!context.mounted) return;
                           context.read<ClockCubit>().stop();
-                          context.read<ClockCubit>().reset();
                           if (state.selectedItem == state.meetingItems.length - 1) {
                             RoleType roleType = (await _getRoleType(context)) ?? RoleType.nonSpeaker;
                             if (!context.mounted) return;
-                            context.read<MeetingCubit>().setMilestones(roleType);
+                            await context.read<MeetingCubit>().setMilestones(roleType);
+                            if (!context.mounted) return;
                           }
+                          context.read<ClockCubit>().reset();
                         },
                         text: 'Stop Next',
                         icon: Icons.stop,

@@ -52,5 +52,10 @@ class MeetingItemsRepositoryIsar extends MeetingItemsRepository {
   Future<List<MeetingItem>> getMeetingItems(int meetingId) {
     return isar.meetingItems.filter().meetingIdEqualTo(meetingId).findAll();
   }
+  
+  @override
+  Future<MeetingItem?> getFromMeeting(int meetingId, int orderNumber) {
+    return isar.meetingItems.filter().meetingIdEqualTo(meetingId).orderNumberEqualTo(orderNumber).findFirst();
+  }
 
 }

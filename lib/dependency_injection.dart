@@ -25,7 +25,7 @@ Future<bool?> setup() async {
 
   // Register your services here
   di.registerLazySingleton<MeetingsService>(() => MeetingsService(di()));
-  di.registerLazySingleton<MeetingItemsService>(() => MeetingItemsService(di()));
+  di.registerLazySingleton<MeetingItemsService>(() => MeetingItemsService(di(), di()));
   return true;
 }
 

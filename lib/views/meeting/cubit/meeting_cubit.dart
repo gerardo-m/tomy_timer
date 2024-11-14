@@ -18,7 +18,6 @@ class MeetingCubit extends Cubit<MeetingState> {
   MeetingItemsService get _meetingItemsService => GetIt.instance.get<MeetingItemsService>();
 
   Meeting _meeting = Meeting.createEmptyMeeting();
-  int _selectedItem = 0;
   List<MeetingItem> _meetingItems = [];
 
   Future<void> load(int? id) async{
@@ -36,35 +35,36 @@ class MeetingCubit extends Cubit<MeetingState> {
     }
     _meetingItems = await _meetingItemsService.loadMeetingItems(_meeting.id);
     if (_meetingItems.isEmpty) _newMeetingItem();
-    _selectedItem = _meetingItems.length - 1;
+    _meeting.selectedItem = _meetingItems.length - 1;
     _emitValidState();
   }
 
   Future<void> changeName(String name)async{
-    _meetingItems[_selectedItem].name = name;
+    _meetingItems[_meeting.selectedItem].name = name;
     // TODO save
     _emitValidState();
   }
 
   Future<void> changeRole(String role)async{
-    _meetingItems[_selectedItem].role = role;
+    _meetingItems[_meeting.selectedItem].role = role;
     // TODO save
     _emitValidState();
   }
 
   Future<void> playAction() async{
-    MeetingItem item = _meetingItems[_selectedItem];
+    MeetingItem item = _meetingItems[_meeting.selectedItem];
     item.startTime = DateTime.now();
     await _meetingItemsService.saveMeetingItem(item);
   }
 
   Future<void> stopNextAction()async{
-    MeetingItem item = _meetingItems[_selectedItem];
+    MeetingItem item = _meetingItems[_meeting.selectedItem];
     DateTime currentTime = DateTime.now();
     item.iduration = currentTime.difference(item.startTime).inMilliseconds;
+    _meeting.selectedItem++;
     await _meetingItemsService.saveMeetingItem(item);
-    _selectedItem++;
-    if (_selectedItem >= _meetingItems.length){
+    await _meetingsService.saveMeeting(_meeting);
+    if (_meeting.selectedItem >= _meetingItems.length){
       _newMeetingItem();
     }
     _emitValidState();
@@ -72,12 +72,12 @@ class MeetingCubit extends Cubit<MeetingState> {
 
   Future<void> addMeetingItem()async{
     _newMeetingItem();
-    _selectedItem = _meetingItems.length - 1;
+    _meeting.selectedItem = _meetingItems.length - 1;
     _emitValidState();
   }
 
   Future<void> setMilestones(RoleType roleType)async{
-    MeetingItem item = _meetingItems[_selectedItem];
+    MeetingItem item = _meetingItems[_meeting.selectedItem];
     if (roleType == RoleType.speaker){
       item.greenTime = const Duration(minutes: 5).inMilliseconds;
       item.ambarTime = const Duration(minutes: 6).inMilliseconds;
@@ -94,7 +94,7 @@ class MeetingCubit extends Cubit<MeetingState> {
   }
 
   Future<void> _newMeetingItem() async{
-    MeetingItem item = MeetingItem.createEmptyMeetingItem(_meeting.id);
+    MeetingItem item = MeetingItem.createEmptyMeetingItem(_meeting.id, _meetingItems.length);
     _meetingItems.add(item);
   }
 
@@ -107,7 +107,7 @@ class MeetingCubit extends Cubit<MeetingState> {
 
   void _emitValidState(){
     List<EMeetingItem> eMeetingItems = _meetingItems.map((e) => e.toEMeetingItem(),).toList();
-    emit(MeetingValid(meeting: _meeting.toEMeeting(), meetingItems: eMeetingItems, selectedItem: _selectedItem));
+    emit(MeetingValid(meeting: _meeting.toEMeeting(), meetingItems: eMeetingItems, selectedItem: _meeting.selectedItem));
   }
   
 }

@@ -10,6 +10,7 @@ class MeetingItem {
   String role;
   int iduration;
   DateTime startTime;
+  int orderNumber;
   
   @enumerated
   RoleType roleType;
@@ -26,6 +27,7 @@ class MeetingItem {
     required this.role,
     required this.iduration,
     required this.startTime,
+    required this.orderNumber,
     required this.roleType,
     this.greenTime,
     this.ambarTime,
@@ -33,8 +35,8 @@ class MeetingItem {
     required this.meetingId,
   });
 
-  factory MeetingItem.createEmptyMeetingItem(int meetingId){
-    return MeetingItem(id: Isar.autoIncrement, name: 'Nombre', role: 'Rol', iduration: 0, startTime: DateTime.now(), roleType: RoleType.nonSpeaker, redTime: const Duration(minutes: 1).inMilliseconds, meetingId: meetingId);
+  factory MeetingItem.createEmptyMeetingItem(int meetingId, int orderNumber){
+    return MeetingItem(id: Isar.autoIncrement, name: 'Nombre', role: 'Rol', iduration: 0, startTime: DateTime.now(), orderNumber: orderNumber, roleType: RoleType.nonSpeaker, redTime: const Duration(minutes: 1).inMilliseconds, meetingId: meetingId,);
   }
 
   @ignore
@@ -53,11 +55,24 @@ class MeetingItem {
       role: role,
       iduration: iduration,
       startTime: startTime,
+      orderNumber: orderNumber,
       roleType: roleType,
       greenTime: greenTime,
       ambarTime: ambarTime,
       redTime: redTime,
     );
+  }
+
+  Duration getNextMilestone(Duration currentDuration){
+    int iCurrent = currentDuration.inMilliseconds;
+    if (greenTime != null){
+      if (iCurrent < greenTime!) return greenDuration!;
+    }
+    if (ambarTime != null){
+      if (iCurrent < ambarTime!) return ambarDuration!;
+    }
+    if (iCurrent < redTime) return redDuration;
+    return Duration.zero;
   }
 }
 
@@ -67,6 +82,7 @@ class EMeetingItem with EquatableMixin {
   final String role;
   final int iduration;
   final DateTime startTime;
+  final int orderNumber;
   final RoleType roleType;
 
   final int? greenTime;
@@ -79,6 +95,7 @@ class EMeetingItem with EquatableMixin {
     required this.role,
     required this.iduration,
     required this.startTime,
+    required this.orderNumber,
     required this.roleType,
     this.greenTime,
     this.ambarTime,
@@ -91,5 +108,5 @@ class EMeetingItem with EquatableMixin {
   Duration get duration => Duration(milliseconds: iduration);
 
   @override
-  List<Object?> get props => [id, name, role, iduration, startTime, roleType, greenTime, ambarTime, redTime];
+  List<Object?> get props => [id, name, role, iduration, startTime, orderNumber, roleType, greenTime, ambarTime, redTime];
 }

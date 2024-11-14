@@ -27,8 +27,13 @@ const MeetingSchema = CollectionSchema(
       name: r'date',
       type: IsarType.dateTime,
     ),
-    r'startingTime': PropertySchema(
+    r'selectedItem': PropertySchema(
       id: 2,
+      name: r'selectedItem',
+      type: IsarType.long,
+    ),
+    r'startingTime': PropertySchema(
+      id: 3,
       name: r'startingTime',
       type: IsarType.dateTime,
     )
@@ -64,7 +69,8 @@ void _meetingSerialize(
 ) {
   writer.writeBool(offsets[0], object.current);
   writer.writeDateTime(offsets[1], object.date);
-  writer.writeDateTime(offsets[2], object.startingTime);
+  writer.writeLong(offsets[2], object.selectedItem);
+  writer.writeDateTime(offsets[3], object.startingTime);
 }
 
 Meeting _meetingDeserialize(
@@ -77,7 +83,8 @@ Meeting _meetingDeserialize(
     current: reader.readBoolOrNull(offsets[0]) ?? true,
     date: reader.readDateTime(offsets[1]),
     id: id,
-    startingTime: reader.readDateTimeOrNull(offsets[2]),
+    selectedItem: reader.readLong(offsets[2]),
+    startingTime: reader.readDateTimeOrNull(offsets[3]),
   );
   return object;
 }
@@ -94,6 +101,8 @@ P _meetingDeserializeProp<P>(
     case 1:
       return (reader.readDateTime(offset)) as P;
     case 2:
+      return (reader.readLong(offset)) as P;
+    case 3:
       return (reader.readDateTimeOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -304,6 +313,59 @@ extension MeetingQueryFilter
     });
   }
 
+  QueryBuilder<Meeting, Meeting, QAfterFilterCondition> selectedItemEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'selectedItem',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Meeting, Meeting, QAfterFilterCondition> selectedItemGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'selectedItem',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Meeting, Meeting, QAfterFilterCondition> selectedItemLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'selectedItem',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Meeting, Meeting, QAfterFilterCondition> selectedItemBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'selectedItem',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<Meeting, Meeting, QAfterFilterCondition> startingTimeIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -406,6 +468,18 @@ extension MeetingQuerySortBy on QueryBuilder<Meeting, Meeting, QSortBy> {
     });
   }
 
+  QueryBuilder<Meeting, Meeting, QAfterSortBy> sortBySelectedItem() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'selectedItem', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Meeting, Meeting, QAfterSortBy> sortBySelectedItemDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'selectedItem', Sort.desc);
+    });
+  }
+
   QueryBuilder<Meeting, Meeting, QAfterSortBy> sortByStartingTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startingTime', Sort.asc);
@@ -457,6 +531,18 @@ extension MeetingQuerySortThenBy
     });
   }
 
+  QueryBuilder<Meeting, Meeting, QAfterSortBy> thenBySelectedItem() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'selectedItem', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Meeting, Meeting, QAfterSortBy> thenBySelectedItemDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'selectedItem', Sort.desc);
+    });
+  }
+
   QueryBuilder<Meeting, Meeting, QAfterSortBy> thenByStartingTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startingTime', Sort.asc);
@@ -484,6 +570,12 @@ extension MeetingQueryWhereDistinct
     });
   }
 
+  QueryBuilder<Meeting, Meeting, QDistinct> distinctBySelectedItem() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'selectedItem');
+    });
+  }
+
   QueryBuilder<Meeting, Meeting, QDistinct> distinctByStartingTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'startingTime');
@@ -508,6 +600,12 @@ extension MeetingQueryProperty
   QueryBuilder<Meeting, DateTime, QQueryOperations> dateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'date');
+    });
+  }
+
+  QueryBuilder<Meeting, int, QQueryOperations> selectedItemProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'selectedItem');
     });
   }
 
