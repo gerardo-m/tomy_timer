@@ -42,9 +42,13 @@
     - ~~Implement calculation of next milestone~~
     - ~~Implement the color change~~
 - Implement report
-    - report model
-    - report services and repository
+    - ~~report model~~
+    - ~~report services and repository~~
+    - ~~report cubit~~
     - generate report data
+    - show data in report screen
+    - finish report screen UI
+- Separate finish the meeting from showing the report
 - Implement Finish the meeting
 - Template
     - Template model
