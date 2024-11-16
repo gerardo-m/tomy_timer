@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:isar/isar.dart';
+import 'package:tomy_timer/models/meeting.dart';
+import 'package:tomy_timer/models/report_item.dart';
 
- part 'report.g.dart';
+part 'report.g.dart';
 
 @collection
 class Report {
@@ -10,17 +12,30 @@ class Report {
   DateTime actualStartTime;
 
   DateTime actualReportTime;
-  DateTime scheduledReportTime;
+  DateTime? scheduledReportTime;
 
   int meetingId;
+
+  List<ReportItem> speakers = [];
+  List<ReportItem> outOfTimeMembers = [];
   Report({
     required this.id,
     required this.scheduledStartTime,
     required this.actualStartTime,
     required this.actualReportTime,
-    required this.scheduledReportTime,
+    this.scheduledReportTime,
     required this.meetingId,
   });
+
+  factory Report.fromMeeting(Meeting meeting) {
+    return Report(
+      id: Isar.autoIncrement,
+      scheduledStartTime: meeting.date,
+      actualStartTime: meeting.startingTime ?? meeting.date,
+      actualReportTime: DateTime.now(),
+      meetingId: meeting.id,
+    );
+  }
 
   EReport toEReport() {
     return EReport(
@@ -40,7 +55,7 @@ class EReport with EquatableMixin {
   final DateTime actualStartTime;
 
   final DateTime actualReportTime;
-  final DateTime scheduledReportTime;
+  final DateTime? scheduledReportTime;
 
   final int meetingId;
 

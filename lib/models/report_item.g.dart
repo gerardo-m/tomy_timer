@@ -32,28 +32,33 @@ const ReportItemSchema = CollectionSchema(
       name: r'iMinTime',
       type: IsarType.long,
     ),
-    r'name': PropertySchema(
+    r'meetingItemId': PropertySchema(
       id: 3,
+      name: r'meetingItemId',
+      type: IsarType.long,
+    ),
+    r'name': PropertySchema(
+      id: 4,
       name: r'name',
       type: IsarType.string,
     ),
     r'orderNumber': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'orderNumber',
       type: IsarType.long,
     ),
     r'reportId': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'reportId',
       type: IsarType.long,
     ),
     r'role': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'role',
       type: IsarType.string,
     ),
     r'roleType': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'roleType',
       type: IsarType.byte,
       enumMap: _ReportItemroleTypeEnumValueMap,
@@ -93,11 +98,12 @@ void _reportItemSerialize(
   writer.writeLong(offsets[0], object.iActualTime);
   writer.writeLong(offsets[1], object.iMaxTime);
   writer.writeLong(offsets[2], object.iMinTime);
-  writer.writeString(offsets[3], object.name);
-  writer.writeLong(offsets[4], object.orderNumber);
-  writer.writeLong(offsets[5], object.reportId);
-  writer.writeString(offsets[6], object.role);
-  writer.writeByte(offsets[7], object.roleType.index);
+  writer.writeLong(offsets[3], object.meetingItemId);
+  writer.writeString(offsets[4], object.name);
+  writer.writeLong(offsets[5], object.orderNumber);
+  writer.writeLong(offsets[6], object.reportId);
+  writer.writeString(offsets[7], object.role);
+  writer.writeByte(offsets[8], object.roleType.index);
 }
 
 ReportItem _reportItemDeserialize(
@@ -111,12 +117,13 @@ ReportItem _reportItemDeserialize(
     iMaxTime: reader.readLong(offsets[1]),
     iMinTime: reader.readLong(offsets[2]),
     id: id,
-    name: reader.readString(offsets[3]),
-    orderNumber: reader.readLong(offsets[4]),
-    reportId: reader.readLong(offsets[5]),
-    role: reader.readString(offsets[6]),
+    meetingItemId: reader.readLong(offsets[3]),
+    name: reader.readString(offsets[4]),
+    orderNumber: reader.readLong(offsets[5]),
+    reportId: reader.readLong(offsets[6]),
+    role: reader.readString(offsets[7]),
     roleType:
-        _ReportItemroleTypeValueEnumMap[reader.readByteOrNull(offsets[7])] ??
+        _ReportItemroleTypeValueEnumMap[reader.readByteOrNull(offsets[8])] ??
             RoleType.speaker,
   );
   return object;
@@ -136,14 +143,16 @@ P _reportItemDeserializeProp<P>(
     case 2:
       return (reader.readLong(offset)) as P;
     case 3:
-      return (reader.readString(offset)) as P;
-    case 4:
       return (reader.readLong(offset)) as P;
+    case 4:
+      return (reader.readString(offset)) as P;
     case 5:
       return (reader.readLong(offset)) as P;
     case 6:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 7:
+      return (reader.readString(offset)) as P;
+    case 8:
       return (_ReportItemroleTypeValueEnumMap[reader.readByteOrNull(offset)] ??
           RoleType.speaker) as P;
     default:
@@ -460,6 +469,62 @@ extension ReportItemQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
+      meetingItemIdEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'meetingItemId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
+      meetingItemIdGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'meetingItemId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
+      meetingItemIdLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'meetingItemId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
+      meetingItemIdBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'meetingItemId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -937,6 +1002,18 @@ extension ReportItemQuerySortBy
     });
   }
 
+  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByMeetingItemId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'meetingItemId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByMeetingItemIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'meetingItemId', Sort.desc);
+    });
+  }
+
   QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -1048,6 +1125,18 @@ extension ReportItemQuerySortThenBy
     });
   }
 
+  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByMeetingItemId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'meetingItemId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByMeetingItemIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'meetingItemId', Sort.desc);
+    });
+  }
+
   QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -1129,6 +1218,12 @@ extension ReportItemQueryWhereDistinct
     });
   }
 
+  QueryBuilder<ReportItem, ReportItem, QDistinct> distinctByMeetingItemId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'meetingItemId');
+    });
+  }
+
   QueryBuilder<ReportItem, ReportItem, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1185,6 +1280,12 @@ extension ReportItemQueryProperty
   QueryBuilder<ReportItem, int, QQueryOperations> iMinTimeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'iMinTime');
+    });
+  }
+
+  QueryBuilder<ReportItem, int, QQueryOperations> meetingItemIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'meetingItemId');
     });
   }
 

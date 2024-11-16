@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:tomy_timer/models/meeting.dart';
 import 'package:tomy_timer/models/meeting_item.dart';
 import 'package:tomy_timer/models/report.dart';
+import 'package:tomy_timer/models/report_item.dart';
 import 'package:tomy_timer/repositories/meeting_items_repository.dart';
 import 'package:tomy_timer/repositories/meetings_repository.dart';
 import 'package:tomy_timer/repositories/report_items_repository.dart';
 import 'package:tomy_timer/repositories/reports_repository.dart';
-import 'package:tomy_timer/utils/constants.dart';
+import 'package:tomy_timer/utils/utils.dart';
 
 class ReportsService {
   ReportsRepository reportsRepository;
@@ -60,7 +61,21 @@ class ReportsService {
     Meeting? meeting = await meetingsRepository.getMeeting(meetingId);
     if (meeting == null)return null;
     List<MeetingItem> meetingItems = await meetingItemsRepository.getMeetingItems(meetingId);
-    // Report report = Report(id: id, scheduledStartTime: scheduledStartTime, actualStartTime: actualStartTime, actualReportTime: actualReportTime, scheduledReportTime: scheduledReportTime, meetingId: meetingId)
-    return null;
+    Report report = Report.fromMeeting(meeting);
+    for (MeetingItem meetingItem in meetingItems){
+      if (meetingItem.roleType != RoleType.speaker){
+        if (meetingItem.redTime > meetingItem.iduration && (meetingItem.greenTime ?? 0) < meetingItem.iduration) continue;
+      }
+      ReportItem reportItem = ReportItem.fromMeetingItem(report.id, meetingItem);
+      if (meetingItem.orderNumber == meeting.selectedItem){
+        if (meetingItem.scheduledStartTime != null) report.scheduledReportTime = meetingItem.scheduledStartTime;
+      }
+      if (reportItem.roleType == RoleType.speaker) {
+        report.speakers.add(reportItem);
+      } else {
+        report.outOfTimeMembers.add(reportItem);
+      }
+    }
+    return report;
   }
 }

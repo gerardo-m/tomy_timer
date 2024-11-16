@@ -115,7 +115,7 @@ class MeetingScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.of(context).pushNamed(TomyTimerRoutes.report);
+                              Navigator.of(context).pushNamed(TomyTimerRoutes.report, arguments: {"id": state.meeting.id});
                             },
                             child: const Text('Finalizar'),
                           ),

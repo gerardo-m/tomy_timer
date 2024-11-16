@@ -45,8 +45,8 @@
     - ~~report model~~
     - ~~report services and repository~~
     - ~~report cubit~~
-    - generate report data
-    - show data in report screen
+    - ~~generate report data~~
+    - ~~show data in report screen~~
     - finish report screen UI
 - Separate finish the meeting from showing the report
 - Implement Finish the meeting

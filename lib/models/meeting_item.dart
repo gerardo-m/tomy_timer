@@ -10,6 +10,7 @@ class MeetingItem {
   String role;
   int iduration;
   DateTime startTime;
+  DateTime? scheduledStartTime;
   int orderNumber;
   
   @enumerated
@@ -27,6 +28,7 @@ class MeetingItem {
     required this.role,
     required this.iduration,
     required this.startTime,
+    this.scheduledStartTime,
     required this.orderNumber,
     required this.roleType,
     this.greenTime,
@@ -55,6 +57,7 @@ class MeetingItem {
       role: role,
       iduration: iduration,
       startTime: startTime,
+      scheduledStartTime: scheduledStartTime,
       orderNumber: orderNumber,
       roleType: roleType,
       greenTime: greenTime,
@@ -82,6 +85,7 @@ class EMeetingItem with EquatableMixin {
   final String role;
   final int iduration;
   final DateTime startTime;
+  final DateTime? scheduledStartTime;
   final int orderNumber;
   final RoleType roleType;
 
@@ -95,6 +99,7 @@ class EMeetingItem with EquatableMixin {
     required this.role,
     required this.iduration,
     required this.startTime,
+    required this.scheduledStartTime,
     required this.orderNumber,
     required this.roleType,
     this.greenTime,
@@ -108,5 +113,5 @@ class EMeetingItem with EquatableMixin {
   Duration get duration => Duration(milliseconds: iduration);
 
   @override
-  List<Object?> get props => [id, name, role, iduration, startTime, orderNumber, roleType, greenTime, ambarTime, redTime];
+  List<Object?> get props => [id, name, role, iduration, startTime, scheduledStartTime, orderNumber, roleType, greenTime, ambarTime, redTime];
 }

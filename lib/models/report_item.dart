@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:isar/isar.dart';
+import 'package:tomy_timer/models/meeting_item.dart';
 
 import 'package:tomy_timer/utils/enums.dart';
 
@@ -18,6 +19,7 @@ class ReportItem {
   RoleType roleType;
 
   int reportId;
+  int meetingItemId;
 
   ReportItem({
     required this.id,
@@ -29,7 +31,30 @@ class ReportItem {
     required this.orderNumber,
     required this.roleType,
     required this.reportId,
+    required this.meetingItemId,
   });
+
+  factory ReportItem.fromMeetingItem(int reportId, MeetingItem meetingItem) {
+    return ReportItem(
+      id: Isar.autoIncrement,
+      role: meetingItem.role,
+      name: meetingItem.name,
+      iMinTime: meetingItem.greenTime ?? 0,
+      iMaxTime: meetingItem.redTime,
+      iActualTime: meetingItem.duration.inMilliseconds,
+      orderNumber: meetingItem.orderNumber,
+      roleType: meetingItem.roleType,
+      reportId: reportId,
+      meetingItemId: meetingItem.id,
+    );
+  }
+
+  @ignore
+  Duration get minDuration => Duration(milliseconds: iMinTime);
+  @ignore
+  Duration get maxDuration => Duration(milliseconds: iMaxTime);
+  @ignore
+  Duration get actualDuration => Duration(milliseconds: iActualTime);
 
   EReportItem toEReportItem() {
     return EReportItem(
@@ -42,6 +67,7 @@ class ReportItem {
       orderNumber: orderNumber,
       roleType: roleType,
       reportId: reportId,
+      meetingItemId: meetingItemId,
     );
   }
 }
@@ -57,6 +83,7 @@ class EReportItem with EquatableMixin {
   final RoleType roleType;
 
   final int reportId;
+  final int meetingItemId;
 
   EReportItem({
     required this.id,
@@ -68,8 +95,13 @@ class EReportItem with EquatableMixin {
     required this.orderNumber,
     required this.roleType,
     required this.reportId,
+    required this.meetingItemId,
   });
 
+  Duration get minDuration => Duration(milliseconds: iMinTime);
+  Duration get maxDuration => Duration(milliseconds: iMaxTime);
+  Duration get actualDuration => Duration(milliseconds: iActualTime);
+
   @override
-  List<Object?> get props => [id, role, name, iMinTime, iMaxTime, iActualTime, orderNumber, roleType, reportId];
+  List<Object?> get props => [id, role, name, iMinTime, iMaxTime, iActualTime, orderNumber, roleType, reportId, meetingItemId];
 }

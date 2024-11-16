@@ -90,7 +90,7 @@ Report _reportDeserialize(
     actualStartTime: reader.readDateTime(offsets[1]),
     id: id,
     meetingId: reader.readLong(offsets[2]),
-    scheduledReportTime: reader.readDateTime(offsets[3]),
+    scheduledReportTime: reader.readDateTimeOrNull(offsets[3]),
     scheduledStartTime: reader.readDateTime(offsets[4]),
   );
   return object;
@@ -110,7 +110,7 @@ P _reportDeserializeProp<P>(
     case 2:
       return (reader.readLong(offset)) as P;
     case 3:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 4:
       return (reader.readDateTime(offset)) as P;
     default:
@@ -420,7 +420,25 @@ extension ReportQueryFilter on QueryBuilder<Report, Report, QFilterCondition> {
   }
 
   QueryBuilder<Report, Report, QAfterFilterCondition>
-      scheduledReportTimeEqualTo(DateTime value) {
+      scheduledReportTimeIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'scheduledReportTime',
+      ));
+    });
+  }
+
+  QueryBuilder<Report, Report, QAfterFilterCondition>
+      scheduledReportTimeIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'scheduledReportTime',
+      ));
+    });
+  }
+
+  QueryBuilder<Report, Report, QAfterFilterCondition>
+      scheduledReportTimeEqualTo(DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'scheduledReportTime',
@@ -431,7 +449,7 @@ extension ReportQueryFilter on QueryBuilder<Report, Report, QFilterCondition> {
 
   QueryBuilder<Report, Report, QAfterFilterCondition>
       scheduledReportTimeGreaterThan(
-    DateTime value, {
+    DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -445,7 +463,7 @@ extension ReportQueryFilter on QueryBuilder<Report, Report, QFilterCondition> {
 
   QueryBuilder<Report, Report, QAfterFilterCondition>
       scheduledReportTimeLessThan(
-    DateTime value, {
+    DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -459,8 +477,8 @@ extension ReportQueryFilter on QueryBuilder<Report, Report, QFilterCondition> {
 
   QueryBuilder<Report, Report, QAfterFilterCondition>
       scheduledReportTimeBetween(
-    DateTime lower,
-    DateTime upper, {
+    DateTime? lower,
+    DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -728,7 +746,7 @@ extension ReportQueryProperty on QueryBuilder<Report, Report, QQueryProperty> {
     });
   }
 
-  QueryBuilder<Report, DateTime, QQueryOperations>
+  QueryBuilder<Report, DateTime?, QQueryOperations>
       scheduledReportTimeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'scheduledReportTime');

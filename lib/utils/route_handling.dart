@@ -3,6 +3,7 @@ import 'package:tomy_timer/utils/routes.dart';
 import 'package:tomy_timer/views/home/cubit/home_cubit.dart';
 import 'package:tomy_timer/views/meeting/clock/cubit/clock_cubit.dart';
 import 'package:tomy_timer/views/meeting/cubit/meeting_cubit.dart';
+import 'package:tomy_timer/views/report/cubit/report_cubit.dart';
 import 'package:tomy_timer/views/settings/cubit/settings_cubit.dart';
 import 'package:tomy_timer/views/views.dart';
 import 'package:flutter/material.dart';
@@ -62,8 +63,16 @@ class TomyTimerRouteHandling {
   }
 
   static Route<dynamic> _goReport(RouteSettings settings) {
+    int meetingId = 0;
+    if (settings.arguments != null){
+      Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;
+      meetingId = args["id"];
+    }
     return MaterialPageRoute(builder: (context) {
-      return const ReportScreen();
+      return BlocProvider(
+        create: (context) => ReportCubit()..load(meetingId),
+        child: const ReportScreen(),
+      );
     });
   }
 

@@ -4,6 +4,7 @@ class TomyTimerRoutes{
   /// id: optional. If provided it will load the meeting with that id.
   /// Otherwise it will create a new meeting.
   static const meeting = '/meeting';
+  /// id: required. Provide the meeting id
   static const report = '/report';
   static const pastMeetings = '/past_meetings';
   static const settings = '/settings';

@@ -63,8 +63,13 @@ const MeetingItemSchema = CollectionSchema(
       type: IsarType.byte,
       enumMap: _MeetingItemroleTypeEnumValueMap,
     ),
-    r'startTime': PropertySchema(
+    r'scheduledStartTime': PropertySchema(
       id: 9,
+      name: r'scheduledStartTime',
+      type: IsarType.dateTime,
+    ),
+    r'startTime': PropertySchema(
+      id: 10,
       name: r'startTime',
       type: IsarType.dateTime,
     )
@@ -109,7 +114,8 @@ void _meetingItemSerialize(
   writer.writeLong(offsets[6], object.redTime);
   writer.writeString(offsets[7], object.role);
   writer.writeByte(offsets[8], object.roleType.index);
-  writer.writeDateTime(offsets[9], object.startTime);
+  writer.writeDateTime(offsets[9], object.scheduledStartTime);
+  writer.writeDateTime(offsets[10], object.startTime);
 }
 
 MeetingItem _meetingItemDeserialize(
@@ -131,7 +137,8 @@ MeetingItem _meetingItemDeserialize(
     roleType:
         _MeetingItemroleTypeValueEnumMap[reader.readByteOrNull(offsets[8])] ??
             RoleType.speaker,
-    startTime: reader.readDateTime(offsets[9]),
+    scheduledStartTime: reader.readDateTimeOrNull(offsets[9]),
+    startTime: reader.readDateTime(offsets[10]),
   );
   return object;
 }
@@ -163,6 +170,8 @@ P _meetingItemDeserializeProp<P>(
       return (_MeetingItemroleTypeValueEnumMap[reader.readByteOrNull(offset)] ??
           RoleType.speaker) as P;
     case 9:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 10:
       return (reader.readDateTime(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1012,6 +1021,80 @@ extension MeetingItemQueryFilter
   }
 
   QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition>
+      scheduledStartTimeIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'scheduledStartTime',
+      ));
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition>
+      scheduledStartTimeIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'scheduledStartTime',
+      ));
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition>
+      scheduledStartTimeEqualTo(DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'scheduledStartTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition>
+      scheduledStartTimeGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'scheduledStartTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition>
+      scheduledStartTimeLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'scheduledStartTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition>
+      scheduledStartTimeBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'scheduledStartTime',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterFilterCondition>
       startTimeEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1184,6 +1267,20 @@ extension MeetingItemQuerySortBy
     });
   }
 
+  QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy>
+      sortByScheduledStartTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'scheduledStartTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy>
+      sortByScheduledStartTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'scheduledStartTime', Sort.desc);
+    });
+  }
+
   QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy> sortByStartTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startTime', Sort.asc);
@@ -1319,6 +1416,20 @@ extension MeetingItemQuerySortThenBy
     });
   }
 
+  QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy>
+      thenByScheduledStartTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'scheduledStartTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy>
+      thenByScheduledStartTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'scheduledStartTime', Sort.desc);
+    });
+  }
+
   QueryBuilder<MeetingItem, MeetingItem, QAfterSortBy> thenByStartTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startTime', Sort.asc);
@@ -1390,6 +1501,13 @@ extension MeetingItemQueryWhereDistinct
     });
   }
 
+  QueryBuilder<MeetingItem, MeetingItem, QDistinct>
+      distinctByScheduledStartTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'scheduledStartTime');
+    });
+  }
+
   QueryBuilder<MeetingItem, MeetingItem, QDistinct> distinctByStartTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'startTime');
@@ -1456,6 +1574,13 @@ extension MeetingItemQueryProperty
   QueryBuilder<MeetingItem, RoleType, QQueryOperations> roleTypeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'roleType');
+    });
+  }
+
+  QueryBuilder<MeetingItem, DateTime?, QQueryOperations>
+      scheduledStartTimeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'scheduledStartTime');
     });
   }
 
