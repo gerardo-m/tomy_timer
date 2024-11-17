@@ -6,7 +6,7 @@ part 'meeting.g.dart';
 @collection
 class Meeting {
 
-  Id id = Isar.autoIncrement;
+  Id id;
   DateTime date;
   bool current;
   int selectedItem;

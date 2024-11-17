@@ -5,6 +5,8 @@ import 'package:tomy_timer/views/meeting/clock/cubit/clock_cubit.dart';
 import 'package:tomy_timer/views/meeting/cubit/meeting_cubit.dart';
 import 'package:tomy_timer/views/report/cubit/report_cubit.dart';
 import 'package:tomy_timer/views/settings/cubit/settings_cubit.dart';
+import 'package:tomy_timer/views/template/cubit/template_cubit.dart';
+import 'package:tomy_timer/views/templates/cubit/templates_cubit.dart';
 import 'package:tomy_timer/views/views.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +23,10 @@ class TomyTimerRouteHandling {
         return _goPastMeetings(settings);
       case TomyTimerRoutes.settings:
         return _goSettings(settings);
+      case TomyTimerRoutes.templates:
+        return _goTemplates(settings);
+      case TomyTimerRoutes.template:
+        return _goTemplate(settings);
       default:
         return MaterialPageRoute(
           builder: (context) {
@@ -63,17 +69,28 @@ class TomyTimerRouteHandling {
   }
 
   static Route<dynamic> _goReport(RouteSettings settings) {
-    int meetingId = 0;
-    if (settings.arguments != null){
+    int? meetingId;
+    int? reportId;
+    if (settings.arguments != null) {
       Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;
-      meetingId = args["id"];
+      reportId = args["id"];
+      meetingId = args["meeting_id"];
     }
-    return MaterialPageRoute(builder: (context) {
-      return BlocProvider(
-        create: (context) => ReportCubit()..load(meetingId),
-        child: const ReportScreen(),
-      );
-    });
+    if (reportId != null) {
+      return MaterialPageRoute(builder: (context) {
+        return BlocProvider(
+          create: (context) => ReportCubit()..load(reportId!),
+          child: const ReportScreen(),
+        );
+      });
+    } else {
+      return MaterialPageRoute(builder: (context) {
+        return BlocProvider(
+          create: (context) => ReportCubit()..generate(meetingId ?? -1),
+          child: const ReportScreen(),
+        );
+      });
+    }
   }
 
   static Route<dynamic> _goPastMeetings(RouteSettings settings) {
@@ -87,6 +104,29 @@ class TomyTimerRouteHandling {
       return BlocProvider(
         create: (context) => SettingsCubit(),
         child: const SettingsScreen(),
+      );
+    });
+  }
+
+  static Route<dynamic> _goTemplates(RouteSettings settings) {
+    return MaterialPageRoute(builder: (context) {
+      return BlocProvider(
+        create: (context) => TemplatesCubit()..load(),
+        child: const TemplatesScreen(),
+      );
+    });
+  }
+
+  static Route<dynamic> _goTemplate(RouteSettings settings) {
+    int? templateId;
+    if (settings.arguments != null) {
+      Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;
+      templateId = args["id"];
+    }
+    return MaterialPageRoute(builder: (context) {
+      return BlocProvider(
+        create: (context) => TemplateCubit()..load(templateId),
+        child: const TemplateScreen(),
       );
     });
   }

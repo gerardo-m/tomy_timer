@@ -7,4 +7,6 @@ abstract class ReportItemsRepository{
   Future<ReportItem?> updateReportItem(ReportItem reportItem);
   Future<void> deleteReportItem(int reportItemId);
   Future<List<ReportItem>> getAllReportItems();
+  Future<List<ReportItem>> getSpeakers(int reportId);
+  Future<List<ReportItem>> getNonSpeakers(int reportId);
 }

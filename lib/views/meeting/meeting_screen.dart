@@ -109,13 +109,35 @@ class MeetingScreen extends StatelessWidget {
                     ],
                   ),
                   Row(
+
                     children: [
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.of(context).pushNamed(TomyTimerRoutes.report, arguments: {"id": state.meeting.id});
+                              Navigator.of(context).pushNamed(TomyTimerRoutes.report, arguments: {"meeting_id": state.meeting.id});
+                            },
+                            child: const Text('Ver reporte'),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              bool? confirm = await showConfirmationDialog(context, 'Finalizar', '¿Está seguro de finalizar? No se podrá editar después de esta acción');
+                              if (!(confirm ?? false)) return;
+                              if (!context.mounted) return;
+                              int? reportId = await context.read<MeetingCubit>().finishMeeting();
+                              if (!context.mounted) return;
+                              if (reportId == null){
+                                showErrorMessage(context, 'Ocurrió un error generando el reporte');
+                                return;
+                              }
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pushNamed(TomyTimerRoutes.report, arguments: {"id": reportId});
                             },
                             child: const Text('Finalizar'),
                           ),
@@ -171,20 +193,24 @@ class _MeetingActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      child: SizedBox(
-        height: 80,
-        width: 80,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Icon(icon),
-            Text(
-              text,
-              textAlign: TextAlign.center,
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+        child: ElevatedButton(
+          onPressed: onPressed,
+          child: SizedBox(
+            height: 80,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Icon(icon),
+                Text(
+                  text,
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

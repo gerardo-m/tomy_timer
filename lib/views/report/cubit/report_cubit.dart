@@ -15,7 +15,19 @@ class ReportCubit extends Cubit<ReportState> {
 
   ReportsService get _reportsService => GetIt.instance.get<ReportsService>();
 
-  Future<void> load(int meetingId)async{
+  Future<void> load(int reportId)async{
+    Report? cand = await _reportsService.getReport(reportId);
+    if (cand == null){
+      emit(ReportInvalid());
+      return;
+    }
+    cand.speakers = await _reportsService.getSpeakers(reportId);
+    cand.outOfTimeMembers = await _reportsService.getOutOfTimeMembers(reportId);
+    _report = cand;
+    _emitValidState();
+  }
+
+  Future<void> generate(int meetingId)async{
     _report = await _reportsService.generateFromMeeting(meetingId);
     if (_report == null) emit(ReportInvalid());
     _emitValidState();

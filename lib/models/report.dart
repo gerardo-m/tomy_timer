@@ -16,8 +16,11 @@ class Report {
 
   int meetingId;
 
+  @ignore
   List<ReportItem> speakers = [];
+  @ignore
   List<ReportItem> outOfTimeMembers = [];
+  
   Report({
     required this.id,
     required this.scheduledStartTime,

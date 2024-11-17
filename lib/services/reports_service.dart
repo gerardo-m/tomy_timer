@@ -57,7 +57,31 @@ class ReportsService {
     return reportsRepository.deleteReport(id);
   }
 
-  Future<Report?> generateFromMeeting(meetingId) async {
+  Future<List<ReportItem>> getSpeakers(int reportId)async{
+    return reportItemsRepository.getSpeakers(reportId);
+  }
+
+  Future<List<ReportItem>> getOutOfTimeMembers(int reportId)async{
+    return reportItemsRepository.getNonSpeakers(reportId);
+  }
+
+  Future<Report?> generateFromMeetingAndSave(int meetingId)async{
+    Report? report = await generateFromMeeting(meetingId);
+    if (report ==null) return null;
+    report = await saveReport(report);
+    if (report ==null) return null;
+    for (ReportItem speaker in report.speakers){
+      speaker.reportId = report.id;
+      await reportItemsRepository.createReportItem(speaker);
+    }
+    for (ReportItem outOfTime in report.outOfTimeMembers){
+      outOfTime.reportId = report.id;
+      await reportItemsRepository.createReportItem(outOfTime);
+    }
+    return report;
+  }
+
+  Future<Report?> generateFromMeeting(int meetingId) async {
     Meeting? meeting = await meetingsRepository.getMeeting(meetingId);
     if (meeting == null)return null;
     List<MeetingItem> meetingItems = await meetingItemsRepository.getMeetingItems(meetingId);

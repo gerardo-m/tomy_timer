@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tomy_timer/models/meeting.dart';
 import 'package:tomy_timer/models/meeting_item.dart';
+import 'package:tomy_timer/models/report.dart';
 import 'package:tomy_timer/services/meeting_items_service.dart';
 import 'package:tomy_timer/services/meetings_service.dart';
+import 'package:tomy_timer/services/reports_service.dart';
 import 'package:tomy_timer/utils/enums.dart';
 import 'package:tomy_timer/views/widgets/rich_bloc_builder.dart';
 
@@ -16,6 +18,7 @@ class MeetingCubit extends Cubit<MeetingState> {
 
   MeetingsService get _meetingsService => GetIt.instance.get<MeetingsService>();
   MeetingItemsService get _meetingItemsService => GetIt.instance.get<MeetingItemsService>();
+  ReportsService get _reportsService => GetIt.instance.get<ReportsService>();
 
   Meeting _meeting = Meeting.createEmptyMeeting();
   List<MeetingItem> _meetingItems = [];
@@ -41,13 +44,13 @@ class MeetingCubit extends Cubit<MeetingState> {
 
   Future<void> changeName(String name)async{
     _meetingItems[_meeting.selectedItem].name = name;
-    // TODO save
+    await _meetingItemsService.saveMeetingItem(_meetingItems[_meeting.selectedItem]);
     _emitValidState();
   }
 
   Future<void> changeRole(String role)async{
     _meetingItems[_meeting.selectedItem].role = role;
-    // TODO save
+    await _meetingItemsService.saveMeetingItem(_meetingItems[_meeting.selectedItem]);
     _emitValidState();
   }
 
@@ -91,6 +94,18 @@ class MeetingCubit extends Cubit<MeetingState> {
     item.roleType = roleType;
     await _meetingItemsService.saveMeetingItem(item);
     _emitValidState();
+  }
+
+  /// Return report id
+  Future<int?> finishMeeting()async{
+    _meeting.current = false;
+    Report? report = await _reportsService.generateFromMeetingAndSave(_meeting.id);
+    await _meetingsService.saveMeeting(_meeting);
+    if (report == null){
+      emit(MeetingInvalid());
+      return null;
+    }
+    return report.id;
   }
 
   Future<void> _newMeetingItem() async{

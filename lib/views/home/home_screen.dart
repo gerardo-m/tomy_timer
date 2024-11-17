@@ -17,12 +17,18 @@ class HomeScreen extends StatelessWidget {
             PopupMenuButton(
               itemBuilder: (context) => [
                 const PopupMenuItem(
+                  value: HomeScreenOptions.templates,
+                  child: Text('Plantillas'),
+                ),
+                const PopupMenuItem(
                   value: HomeScreenOptions.settings,
                   child: Text('Ajustes'),
                 ),
               ],
               onSelected: (value) async{
                 switch (value) {
+                  case HomeScreenOptions.templates:
+                    Navigator.of(context).pushNamed(TomyTimerRoutes.templates);
                   case HomeScreenOptions.settings:
                     await Navigator.of(context).pushNamed(TomyTimerRoutes.settings);
                     if (!context.mounted)return;

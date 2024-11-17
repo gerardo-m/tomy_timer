@@ -41,18 +41,23 @@
 - ~~Implement color changes~~
     - ~~Implement calculation of next milestone~~
     - ~~Implement the color change~~
-- Implement report
+- ~~Implement report~~
     - ~~report model~~
     - ~~report services and repository~~
     - ~~report cubit~~
     - ~~generate report data~~
     - ~~show data in report screen~~
-    - finish report screen UI
-- Separate finish the meeting from showing the report
-- Implement Finish the meeting
+    - ~~finish report screen UI~~
+- ~~Separate finish the meeting from showing the report~~
+- ~~Implement Finish the meeting~~
 - Template
-    - Template model
-    - Template item
-    - Template service and repository
-    - Load template
+    - ~~Template model~~
+    - ~~Template item~~
+    - ~~Template service and repository~~
+    - ~~Template list page~~
+    - Template edit page
+- Load template
+    - Implement template dialog for new meeting
+    - Implement copying the template into a meeting
+- Take the clock cubit to the root application
 - Import from Tomy

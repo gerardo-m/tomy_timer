@@ -18,6 +18,7 @@ class ReportItem {
   @enumerated
   RoleType roleType;
 
+  @Index()
   int reportId;
   int meetingItemId;
 

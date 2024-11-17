@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'report_item.dart';
+part of 'template_item.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
@@ -9,91 +9,77 @@ part of 'report_item.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetReportItemCollection on Isar {
-  IsarCollection<ReportItem> get reportItems => this.collection();
+extension GetTemplateItemCollection on Isar {
+  IsarCollection<TemplateItem> get templateItems => this.collection();
 }
 
-const ReportItemSchema = CollectionSchema(
-  name: r'ReportItem',
-  id: 6145334452177861496,
+const TemplateItemSchema = CollectionSchema(
+  name: r'TemplateItem',
+  id: 3492042616796161138,
   properties: {
-    r'iActualTime': PropertySchema(
+    r'ambarTime': PropertySchema(
       id: 0,
-      name: r'iActualTime',
+      name: r'ambarTime',
       type: IsarType.long,
     ),
-    r'iMaxTime': PropertySchema(
+    r'greenTime': PropertySchema(
       id: 1,
-      name: r'iMaxTime',
-      type: IsarType.long,
-    ),
-    r'iMinTime': PropertySchema(
-      id: 2,
-      name: r'iMinTime',
-      type: IsarType.long,
-    ),
-    r'meetingItemId': PropertySchema(
-      id: 3,
-      name: r'meetingItemId',
+      name: r'greenTime',
       type: IsarType.long,
     ),
     r'name': PropertySchema(
-      id: 4,
+      id: 2,
       name: r'name',
       type: IsarType.string,
     ),
     r'orderNumber': PropertySchema(
-      id: 5,
+      id: 3,
       name: r'orderNumber',
       type: IsarType.long,
     ),
-    r'reportId': PropertySchema(
-      id: 6,
-      name: r'reportId',
+    r'redTime': PropertySchema(
+      id: 4,
+      name: r'redTime',
       type: IsarType.long,
     ),
     r'role': PropertySchema(
-      id: 7,
+      id: 5,
       name: r'role',
       type: IsarType.string,
     ),
     r'roleType': PropertySchema(
-      id: 8,
+      id: 6,
       name: r'roleType',
       type: IsarType.byte,
-      enumMap: _ReportItemroleTypeEnumValueMap,
+      enumMap: _TemplateItemroleTypeEnumValueMap,
+    ),
+    r'scheduledStartTime': PropertySchema(
+      id: 7,
+      name: r'scheduledStartTime',
+      type: IsarType.dateTime,
+    ),
+    r'templateId': PropertySchema(
+      id: 8,
+      name: r'templateId',
+      type: IsarType.long,
     )
   },
-  estimateSize: _reportItemEstimateSize,
-  serialize: _reportItemSerialize,
-  deserialize: _reportItemDeserialize,
-  deserializeProp: _reportItemDeserializeProp,
+  estimateSize: _templateItemEstimateSize,
+  serialize: _templateItemSerialize,
+  deserialize: _templateItemDeserialize,
+  deserializeProp: _templateItemDeserializeProp,
   idName: r'id',
-  indexes: {
-    r'reportId': IndexSchema(
-      id: 1732854644896652467,
-      name: r'reportId',
-      unique: false,
-      replace: false,
-      properties: [
-        IndexPropertySchema(
-          name: r'reportId',
-          type: IndexType.value,
-          caseSensitive: false,
-        )
-      ],
-    )
-  },
+  indexes: {},
   links: {},
   embeddedSchemas: {},
-  getId: _reportItemGetId,
-  getLinks: _reportItemGetLinks,
-  attach: _reportItemAttach,
+  getId: _templateItemGetId,
+  getLinks: _templateItemGetLinks,
+  attach: _templateItemAttach,
   version: '3.1.0+1',
 );
 
-int _reportItemEstimateSize(
-  ReportItem object,
+int _templateItemEstimateSize(
+  TemplateItem object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -103,47 +89,47 @@ int _reportItemEstimateSize(
   return bytesCount;
 }
 
-void _reportItemSerialize(
-  ReportItem object,
+void _templateItemSerialize(
+  TemplateItem object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeLong(offsets[0], object.iActualTime);
-  writer.writeLong(offsets[1], object.iMaxTime);
-  writer.writeLong(offsets[2], object.iMinTime);
-  writer.writeLong(offsets[3], object.meetingItemId);
-  writer.writeString(offsets[4], object.name);
-  writer.writeLong(offsets[5], object.orderNumber);
-  writer.writeLong(offsets[6], object.reportId);
-  writer.writeString(offsets[7], object.role);
-  writer.writeByte(offsets[8], object.roleType.index);
+  writer.writeLong(offsets[0], object.ambarTime);
+  writer.writeLong(offsets[1], object.greenTime);
+  writer.writeString(offsets[2], object.name);
+  writer.writeLong(offsets[3], object.orderNumber);
+  writer.writeLong(offsets[4], object.redTime);
+  writer.writeString(offsets[5], object.role);
+  writer.writeByte(offsets[6], object.roleType.index);
+  writer.writeDateTime(offsets[7], object.scheduledStartTime);
+  writer.writeLong(offsets[8], object.templateId);
 }
 
-ReportItem _reportItemDeserialize(
+TemplateItem _templateItemDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = ReportItem(
-    iActualTime: reader.readLong(offsets[0]),
-    iMaxTime: reader.readLong(offsets[1]),
-    iMinTime: reader.readLong(offsets[2]),
+  final object = TemplateItem(
+    ambarTime: reader.readLongOrNull(offsets[0]),
+    greenTime: reader.readLongOrNull(offsets[1]),
     id: id,
-    meetingItemId: reader.readLong(offsets[3]),
-    name: reader.readString(offsets[4]),
-    orderNumber: reader.readLong(offsets[5]),
-    reportId: reader.readLong(offsets[6]),
-    role: reader.readString(offsets[7]),
+    name: reader.readString(offsets[2]),
+    orderNumber: reader.readLong(offsets[3]),
+    redTime: reader.readLong(offsets[4]),
+    role: reader.readString(offsets[5]),
     roleType:
-        _ReportItemroleTypeValueEnumMap[reader.readByteOrNull(offsets[8])] ??
+        _TemplateItemroleTypeValueEnumMap[reader.readByteOrNull(offsets[6])] ??
             RoleType.speaker,
+    scheduledStartTime: reader.readDateTime(offsets[7]),
+    templateId: reader.readLong(offsets[8]),
   );
   return object;
 }
 
-P _reportItemDeserializeProp<P>(
+P _templateItemDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -151,70 +137,64 @@ P _reportItemDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readLong(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 1:
-      return (reader.readLong(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 2:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 3:
       return (reader.readLong(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 5:
-      return (reader.readLong(offset)) as P;
-    case 6:
-      return (reader.readLong(offset)) as P;
-    case 7:
       return (reader.readString(offset)) as P;
-    case 8:
-      return (_ReportItemroleTypeValueEnumMap[reader.readByteOrNull(offset)] ??
+    case 6:
+      return (_TemplateItemroleTypeValueEnumMap[
+              reader.readByteOrNull(offset)] ??
           RoleType.speaker) as P;
+    case 7:
+      return (reader.readDateTime(offset)) as P;
+    case 8:
+      return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-const _ReportItemroleTypeEnumValueMap = {
+const _TemplateItemroleTypeEnumValueMap = {
   'speaker': 0,
   'nonSpeaker': 1,
 };
-const _ReportItemroleTypeValueEnumMap = {
+const _TemplateItemroleTypeValueEnumMap = {
   0: RoleType.speaker,
   1: RoleType.nonSpeaker,
 };
 
-Id _reportItemGetId(ReportItem object) {
+Id _templateItemGetId(TemplateItem object) {
   return object.id;
 }
 
-List<IsarLinkBase<dynamic>> _reportItemGetLinks(ReportItem object) {
+List<IsarLinkBase<dynamic>> _templateItemGetLinks(TemplateItem object) {
   return [];
 }
 
-void _reportItemAttach(IsarCollection<dynamic> col, Id id, ReportItem object) {
+void _templateItemAttach(
+    IsarCollection<dynamic> col, Id id, TemplateItem object) {
   object.id = id;
 }
 
-extension ReportItemQueryWhereSort
-    on QueryBuilder<ReportItem, ReportItem, QWhere> {
-  QueryBuilder<ReportItem, ReportItem, QAfterWhere> anyId() {
+extension TemplateItemQueryWhereSort
+    on QueryBuilder<TemplateItem, TemplateItem, QWhere> {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterWhere> anyReportId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'reportId'),
-      );
-    });
-  }
 }
 
-extension ReportItemQueryWhere
-    on QueryBuilder<ReportItem, ReportItem, QWhereClause> {
-  QueryBuilder<ReportItem, ReportItem, QAfterWhereClause> idEqualTo(Id id) {
+extension TemplateItemQueryWhere
+    on QueryBuilder<TemplateItem, TemplateItem, QWhereClause> {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
@@ -223,7 +203,8 @@ extension ReportItemQueryWhere
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterWhereClause> idNotEqualTo(Id id) {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterWhereClause> idNotEqualTo(
+      Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -245,7 +226,8 @@ extension ReportItemQueryWhere
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterWhereClause> idGreaterThan(Id id,
+  QueryBuilder<TemplateItem, TemplateItem, QAfterWhereClause> idGreaterThan(
+      Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -254,7 +236,7 @@ extension ReportItemQueryWhere
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterWhereClause> idLessThan(Id id,
+  QueryBuilder<TemplateItem, TemplateItem, QAfterWhereClause> idLessThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -263,7 +245,7 @@ extension ReportItemQueryWhere
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterWhereClause> idBetween(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterWhereClause> idBetween(
     Id lowerId,
     Id upperId, {
     bool includeLower = true,
@@ -278,148 +260,76 @@ extension ReportItemQueryWhere
       ));
     });
   }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterWhereClause> reportIdEqualTo(
-      int reportId) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'reportId',
-        value: [reportId],
-      ));
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterWhereClause> reportIdNotEqualTo(
-      int reportId) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'reportId',
-              lower: [],
-              upper: [reportId],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'reportId',
-              lower: [reportId],
-              includeLower: false,
-              upper: [],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'reportId',
-              lower: [reportId],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'reportId',
-              lower: [],
-              upper: [reportId],
-              includeUpper: false,
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterWhereClause> reportIdGreaterThan(
-    int reportId, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'reportId',
-        lower: [reportId],
-        includeLower: include,
-        upper: [],
-      ));
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterWhereClause> reportIdLessThan(
-    int reportId, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'reportId',
-        lower: [],
-        upper: [reportId],
-        includeUpper: include,
-      ));
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterWhereClause> reportIdBetween(
-    int lowerReportId,
-    int upperReportId, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'reportId',
-        lower: [lowerReportId],
-        includeLower: includeLower,
-        upper: [upperReportId],
-        includeUpper: includeUpper,
-      ));
-    });
-  }
 }
 
-extension ReportItemQueryFilter
-    on QueryBuilder<ReportItem, ReportItem, QFilterCondition> {
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
-      iActualTimeEqualTo(int value) {
+extension TemplateItemQueryFilter
+    on QueryBuilder<TemplateItem, TemplateItem, QFilterCondition> {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      ambarTimeIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'ambarTime',
+      ));
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      ambarTimeIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'ambarTime',
+      ));
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      ambarTimeEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'iActualTime',
+        property: r'ambarTime',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
-      iActualTimeGreaterThan(
-    int value, {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      ambarTimeGreaterThan(
+    int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'iActualTime',
+        property: r'ambarTime',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
-      iActualTimeLessThan(
-    int value, {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      ambarTimeLessThan(
+    int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'iActualTime',
+        property: r'ambarTime',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
-      iActualTimeBetween(
-    int lower,
-    int upper, {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      ambarTimeBetween(
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'iActualTime',
+        property: r'ambarTime',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -428,52 +338,72 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> iMaxTimeEqualTo(
-      int value) {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      greenTimeIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'greenTime',
+      ));
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      greenTimeIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'greenTime',
+      ));
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      greenTimeEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'iMaxTime',
+        property: r'greenTime',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
-      iMaxTimeGreaterThan(
-    int value, {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      greenTimeGreaterThan(
+    int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'iMaxTime',
+        property: r'greenTime',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> iMaxTimeLessThan(
-    int value, {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      greenTimeLessThan(
+    int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'iMaxTime',
+        property: r'greenTime',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> iMaxTimeBetween(
-    int lower,
-    int upper, {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      greenTimeBetween(
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'iMaxTime',
+        property: r'greenTime',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -482,61 +412,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> iMinTimeEqualTo(
-      int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'iMinTime',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
-      iMinTimeGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'iMinTime',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> iMinTimeLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'iMinTime',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> iMinTimeBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'iMinTime',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> idEqualTo(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition> idEqualTo(
       Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -546,7 +422,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition> idGreaterThan(
     Id value, {
     bool include = false,
   }) {
@@ -559,7 +435,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> idLessThan(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition> idLessThan(
     Id value, {
     bool include = false,
   }) {
@@ -572,7 +448,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> idBetween(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition> idBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -589,63 +465,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
-      meetingItemIdEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'meetingItemId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
-      meetingItemIdGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'meetingItemId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
-      meetingItemIdLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'meetingItemId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
-      meetingItemIdBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'meetingItemId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> nameEqualTo(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition> nameEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -658,7 +478,8 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> nameGreaterThan(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      nameGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -673,7 +494,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> nameLessThan(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition> nameLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -688,7 +509,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> nameBetween(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition> nameBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -707,7 +528,8 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> nameStartsWith(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      nameStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -720,7 +542,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> nameEndsWith(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition> nameEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -733,7 +555,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> nameContains(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition> nameContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -745,7 +567,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> nameMatches(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition> nameMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -757,7 +579,8 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> nameIsEmpty() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      nameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'name',
@@ -766,7 +589,8 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> nameIsNotEmpty() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      nameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'name',
@@ -775,7 +599,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
       orderNumberEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -785,7 +609,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
       orderNumberGreaterThan(
     int value, {
     bool include = false,
@@ -799,7 +623,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
       orderNumberLessThan(
     int value, {
     bool include = false,
@@ -813,7 +637,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
       orderNumberBetween(
     int lower,
     int upper, {
@@ -831,44 +655,46 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> reportIdEqualTo(
-      int value) {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      redTimeEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'reportId',
+        property: r'redTime',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
-      reportIdGreaterThan(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      redTimeGreaterThan(
     int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'reportId',
+        property: r'redTime',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> reportIdLessThan(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      redTimeLessThan(
     int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'reportId',
+        property: r'redTime',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> reportIdBetween(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      redTimeBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -876,7 +702,7 @@ extension ReportItemQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'reportId',
+        property: r'redTime',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -885,7 +711,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> roleEqualTo(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition> roleEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -898,7 +724,8 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> roleGreaterThan(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      roleGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -913,7 +740,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> roleLessThan(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition> roleLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -928,7 +755,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> roleBetween(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition> roleBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -947,7 +774,8 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> roleStartsWith(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      roleStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -960,7 +788,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> roleEndsWith(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition> roleEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -973,7 +801,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> roleContains(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition> roleContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -985,7 +813,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> roleMatches(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition> roleMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -997,7 +825,8 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> roleIsEmpty() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      roleIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'role',
@@ -1006,7 +835,8 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> roleIsNotEmpty() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      roleIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'role',
@@ -1015,8 +845,8 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> roleTypeEqualTo(
-      RoleType value) {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      roleTypeEqualTo(RoleType value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'roleType',
@@ -1025,7 +855,7 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition>
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
       roleTypeGreaterThan(
     RoleType value, {
     bool include = false,
@@ -1039,7 +869,8 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> roleTypeLessThan(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      roleTypeLessThan(
     RoleType value, {
     bool include = false,
   }) {
@@ -1052,7 +883,8 @@ extension ReportItemQueryFilter
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterFilterCondition> roleTypeBetween(
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      roleTypeBetween(
     RoleType lower,
     RoleType upper, {
     bool includeLower = true,
@@ -1068,366 +900,488 @@ extension ReportItemQueryFilter
       ));
     });
   }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      scheduledStartTimeEqualTo(DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'scheduledStartTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      scheduledStartTimeGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'scheduledStartTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      scheduledStartTimeLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'scheduledStartTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      scheduledStartTimeBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'scheduledStartTime',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      templateIdEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'templateId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      templateIdGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'templateId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      templateIdLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'templateId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterFilterCondition>
+      templateIdBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'templateId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
-extension ReportItemQueryObject
-    on QueryBuilder<ReportItem, ReportItem, QFilterCondition> {}
+extension TemplateItemQueryObject
+    on QueryBuilder<TemplateItem, TemplateItem, QFilterCondition> {}
 
-extension ReportItemQueryLinks
-    on QueryBuilder<ReportItem, ReportItem, QFilterCondition> {}
+extension TemplateItemQueryLinks
+    on QueryBuilder<TemplateItem, TemplateItem, QFilterCondition> {}
 
-extension ReportItemQuerySortBy
-    on QueryBuilder<ReportItem, ReportItem, QSortBy> {
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByIActualTime() {
+extension TemplateItemQuerySortBy
+    on QueryBuilder<TemplateItem, TemplateItem, QSortBy> {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> sortByAmbarTime() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'iActualTime', Sort.asc);
+      return query.addSortBy(r'ambarTime', Sort.asc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByIActualTimeDesc() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> sortByAmbarTimeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'iActualTime', Sort.desc);
+      return query.addSortBy(r'ambarTime', Sort.desc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByIMaxTime() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> sortByGreenTime() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'iMaxTime', Sort.asc);
+      return query.addSortBy(r'greenTime', Sort.asc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByIMaxTimeDesc() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> sortByGreenTimeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'iMaxTime', Sort.desc);
+      return query.addSortBy(r'greenTime', Sort.desc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByIMinTime() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'iMinTime', Sort.asc);
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByIMinTimeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'iMinTime', Sort.desc);
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByMeetingItemId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'meetingItemId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByMeetingItemIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'meetingItemId', Sort.desc);
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByName() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByNameDesc() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> sortByNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.desc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByOrderNumber() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> sortByOrderNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'orderNumber', Sort.asc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByOrderNumberDesc() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy>
+      sortByOrderNumberDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'orderNumber', Sort.desc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByReportId() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> sortByRedTime() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'reportId', Sort.asc);
+      return query.addSortBy(r'redTime', Sort.asc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByReportIdDesc() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> sortByRedTimeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'reportId', Sort.desc);
+      return query.addSortBy(r'redTime', Sort.desc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByRole() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> sortByRole() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'role', Sort.asc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByRoleDesc() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> sortByRoleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'role', Sort.desc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByRoleType() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> sortByRoleType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'roleType', Sort.asc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> sortByRoleTypeDesc() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> sortByRoleTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'roleType', Sort.desc);
     });
   }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy>
+      sortByScheduledStartTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'scheduledStartTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy>
+      sortByScheduledStartTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'scheduledStartTime', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> sortByTemplateId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'templateId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy>
+      sortByTemplateIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'templateId', Sort.desc);
+    });
+  }
 }
 
-extension ReportItemQuerySortThenBy
-    on QueryBuilder<ReportItem, ReportItem, QSortThenBy> {
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByIActualTime() {
+extension TemplateItemQuerySortThenBy
+    on QueryBuilder<TemplateItem, TemplateItem, QSortThenBy> {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> thenByAmbarTime() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'iActualTime', Sort.asc);
+      return query.addSortBy(r'ambarTime', Sort.asc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByIActualTimeDesc() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> thenByAmbarTimeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'iActualTime', Sort.desc);
+      return query.addSortBy(r'ambarTime', Sort.desc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByIMaxTime() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> thenByGreenTime() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'iMaxTime', Sort.asc);
+      return query.addSortBy(r'greenTime', Sort.asc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByIMaxTimeDesc() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> thenByGreenTimeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'iMaxTime', Sort.desc);
+      return query.addSortBy(r'greenTime', Sort.desc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByIMinTime() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'iMinTime', Sort.asc);
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByIMinTimeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'iMinTime', Sort.desc);
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenById() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByMeetingItemId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'meetingItemId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByMeetingItemIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'meetingItemId', Sort.desc);
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByName() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> thenByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByNameDesc() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> thenByNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.desc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByOrderNumber() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> thenByOrderNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'orderNumber', Sort.asc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByOrderNumberDesc() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy>
+      thenByOrderNumberDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'orderNumber', Sort.desc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByReportId() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> thenByRedTime() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'reportId', Sort.asc);
+      return query.addSortBy(r'redTime', Sort.asc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByReportIdDesc() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> thenByRedTimeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'reportId', Sort.desc);
+      return query.addSortBy(r'redTime', Sort.desc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByRole() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> thenByRole() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'role', Sort.asc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByRoleDesc() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> thenByRoleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'role', Sort.desc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByRoleType() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> thenByRoleType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'roleType', Sort.asc);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QAfterSortBy> thenByRoleTypeDesc() {
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> thenByRoleTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'roleType', Sort.desc);
     });
   }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy>
+      thenByScheduledStartTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'scheduledStartTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy>
+      thenByScheduledStartTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'scheduledStartTime', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy> thenByTemplateId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'templateId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterSortBy>
+      thenByTemplateIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'templateId', Sort.desc);
+    });
+  }
 }
 
-extension ReportItemQueryWhereDistinct
-    on QueryBuilder<ReportItem, ReportItem, QDistinct> {
-  QueryBuilder<ReportItem, ReportItem, QDistinct> distinctByIActualTime() {
+extension TemplateItemQueryWhereDistinct
+    on QueryBuilder<TemplateItem, TemplateItem, QDistinct> {
+  QueryBuilder<TemplateItem, TemplateItem, QDistinct> distinctByAmbarTime() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'iActualTime');
+      return query.addDistinctBy(r'ambarTime');
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QDistinct> distinctByIMaxTime() {
+  QueryBuilder<TemplateItem, TemplateItem, QDistinct> distinctByGreenTime() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'iMaxTime');
+      return query.addDistinctBy(r'greenTime');
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QDistinct> distinctByIMinTime() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'iMinTime');
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QDistinct> distinctByMeetingItemId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'meetingItemId');
-    });
-  }
-
-  QueryBuilder<ReportItem, ReportItem, QDistinct> distinctByName(
+  QueryBuilder<TemplateItem, TemplateItem, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QDistinct> distinctByOrderNumber() {
+  QueryBuilder<TemplateItem, TemplateItem, QDistinct> distinctByOrderNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'orderNumber');
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QDistinct> distinctByReportId() {
+  QueryBuilder<TemplateItem, TemplateItem, QDistinct> distinctByRedTime() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'reportId');
+      return query.addDistinctBy(r'redTime');
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QDistinct> distinctByRole(
+  QueryBuilder<TemplateItem, TemplateItem, QDistinct> distinctByRole(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'role', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ReportItem, ReportItem, QDistinct> distinctByRoleType() {
+  QueryBuilder<TemplateItem, TemplateItem, QDistinct> distinctByRoleType() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'roleType');
     });
   }
+
+  QueryBuilder<TemplateItem, TemplateItem, QDistinct>
+      distinctByScheduledStartTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'scheduledStartTime');
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QDistinct> distinctByTemplateId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'templateId');
+    });
+  }
 }
 
-extension ReportItemQueryProperty
-    on QueryBuilder<ReportItem, ReportItem, QQueryProperty> {
-  QueryBuilder<ReportItem, int, QQueryOperations> idProperty() {
+extension TemplateItemQueryProperty
+    on QueryBuilder<TemplateItem, TemplateItem, QQueryProperty> {
+  QueryBuilder<TemplateItem, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<ReportItem, int, QQueryOperations> iActualTimeProperty() {
+  QueryBuilder<TemplateItem, int?, QQueryOperations> ambarTimeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'iActualTime');
+      return query.addPropertyName(r'ambarTime');
     });
   }
 
-  QueryBuilder<ReportItem, int, QQueryOperations> iMaxTimeProperty() {
+  QueryBuilder<TemplateItem, int?, QQueryOperations> greenTimeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'iMaxTime');
+      return query.addPropertyName(r'greenTime');
     });
   }
 
-  QueryBuilder<ReportItem, int, QQueryOperations> iMinTimeProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'iMinTime');
-    });
-  }
-
-  QueryBuilder<ReportItem, int, QQueryOperations> meetingItemIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'meetingItemId');
-    });
-  }
-
-  QueryBuilder<ReportItem, String, QQueryOperations> nameProperty() {
+  QueryBuilder<TemplateItem, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
     });
   }
 
-  QueryBuilder<ReportItem, int, QQueryOperations> orderNumberProperty() {
+  QueryBuilder<TemplateItem, int, QQueryOperations> orderNumberProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'orderNumber');
     });
   }
 
-  QueryBuilder<ReportItem, int, QQueryOperations> reportIdProperty() {
+  QueryBuilder<TemplateItem, int, QQueryOperations> redTimeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'reportId');
+      return query.addPropertyName(r'redTime');
     });
   }
 
-  QueryBuilder<ReportItem, String, QQueryOperations> roleProperty() {
+  QueryBuilder<TemplateItem, String, QQueryOperations> roleProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'role');
     });
   }
 
-  QueryBuilder<ReportItem, RoleType, QQueryOperations> roleTypeProperty() {
+  QueryBuilder<TemplateItem, RoleType, QQueryOperations> roleTypeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'roleType');
+    });
+  }
+
+  QueryBuilder<TemplateItem, DateTime, QQueryOperations>
+      scheduledStartTimeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'scheduledStartTime');
+    });
+  }
+
+  QueryBuilder<TemplateItem, int, QQueryOperations> templateIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'templateId');
     });
   }
 }

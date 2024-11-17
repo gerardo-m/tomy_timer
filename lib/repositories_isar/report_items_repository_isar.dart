@@ -2,6 +2,7 @@ import 'package:isar/isar.dart';
 
 import 'package:tomy_timer/models/report_item.dart';
 import 'package:tomy_timer/repositories/report_items_repository.dart';
+import 'package:tomy_timer/utils/enums.dart';
 
 class ReportItemsRepositoryIsar extends ReportItemsRepository {
 
@@ -46,6 +47,16 @@ class ReportItemsRepositoryIsar extends ReportItemsRepository {
   @override
   Future<List<ReportItem>> getAllReportItems() {
     return isar.reportItems.where().findAll();
+  }
+  
+  @override
+  Future<List<ReportItem>> getNonSpeakers(int reportId) {
+    return isar.reportItems.filter().reportIdEqualTo(reportId).and().roleTypeEqualTo(RoleType.nonSpeaker).findAll();
+  }
+  
+  @override
+  Future<List<ReportItem>> getSpeakers(int reportId) {
+    return isar.reportItems.filter().reportIdEqualTo(reportId).and().roleTypeEqualTo(RoleType.speaker).findAll();
   }
 
 }
