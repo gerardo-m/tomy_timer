@@ -20,6 +20,7 @@ class MeetingItem {
   int? ambarTime;
   int redTime;
 
+  @Index()
   int meetingId;
 
   MeetingItem({

@@ -69,7 +69,21 @@ const TemplateItemSchema = CollectionSchema(
   deserialize: _templateItemDeserialize,
   deserializeProp: _templateItemDeserializeProp,
   idName: r'id',
-  indexes: {},
+  indexes: {
+    r'templateId': IndexSchema(
+      id: -5352721467389445085,
+      name: r'templateId',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'templateId',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    )
+  },
   links: {},
   embeddedSchemas: {},
   getId: _templateItemGetId,
@@ -190,6 +204,14 @@ extension TemplateItemQueryWhereSort
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterWhere> anyTemplateId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'templateId'),
+      );
+    });
+  }
 }
 
 extension TemplateItemQueryWhere
@@ -256,6 +278,98 @@ extension TemplateItemQueryWhere
         lower: lowerId,
         includeLower: includeLower,
         upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterWhereClause> templateIdEqualTo(
+      int templateId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'templateId',
+        value: [templateId],
+      ));
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterWhereClause>
+      templateIdNotEqualTo(int templateId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'templateId',
+              lower: [],
+              upper: [templateId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'templateId',
+              lower: [templateId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'templateId',
+              lower: [templateId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'templateId',
+              lower: [],
+              upper: [templateId],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterWhereClause>
+      templateIdGreaterThan(
+    int templateId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'templateId',
+        lower: [templateId],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterWhereClause>
+      templateIdLessThan(
+    int templateId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'templateId',
+        lower: [],
+        upper: [templateId],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<TemplateItem, TemplateItem, QAfterWhereClause> templateIdBetween(
+    int lowerTemplateId,
+    int upperTemplateId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'templateId',
+        lower: [lowerTemplateId],
+        includeLower: includeLower,
+        upper: [upperTemplateId],
         includeUpper: includeUpper,
       ));
     });

@@ -20,8 +20,10 @@ class TemplatesScreen extends StatelessWidget {
               for (ETemplate template in state.templates)
                 ListTile(
                   title: Text(template.name),
-                  onTap: () {
-                     Navigator.of(context).pushNamed(TomyTimerRoutes.template, arguments: {"id": template.id});
+                  onTap: () async{
+                     await Navigator.of(context).pushNamed(TomyTimerRoutes.template, arguments: {"id": template.id});
+                     if (!context.mounted)return;
+                    context.read<TemplatesCubit>().load();
                   },
                 )
             ],

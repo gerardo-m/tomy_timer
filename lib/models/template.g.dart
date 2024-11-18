@@ -17,15 +17,15 @@ const TemplateSchema = CollectionSchema(
   name: r'Template',
   id: -3302284955558213743,
   properties: {
-    r'date': PropertySchema(
-      id: 0,
-      name: r'date',
-      type: IsarType.dateTime,
-    ),
     r'name': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'name',
       type: IsarType.string,
+    ),
+    r'scheduledStartingTime': PropertySchema(
+      id: 1,
+      name: r'scheduledStartingTime',
+      type: IsarType.dateTime,
     )
   },
   estimateSize: _templateEstimateSize,
@@ -58,8 +58,8 @@ void _templateSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeDateTime(offsets[0], object.date);
-  writer.writeString(offsets[1], object.name);
+  writer.writeString(offsets[0], object.name);
+  writer.writeDateTime(offsets[1], object.scheduledStartingTime);
 }
 
 Template _templateDeserialize(
@@ -69,9 +69,9 @@ Template _templateDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Template(
-    date: reader.readDateTime(offsets[0]),
     id: id,
-    name: reader.readString(offsets[1]),
+    name: reader.readString(offsets[0]),
+    scheduledStartingTime: reader.readDateTime(offsets[1]),
   );
   return object;
 }
@@ -84,9 +84,9 @@ P _templateDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDateTime(offset)) as P;
-    case 1:
       return (reader.readString(offset)) as P;
+    case 1:
+      return (reader.readDateTime(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -181,59 +181,6 @@ extension TemplateQueryWhere on QueryBuilder<Template, Template, QWhereClause> {
 
 extension TemplateQueryFilter
     on QueryBuilder<Template, Template, QFilterCondition> {
-  QueryBuilder<Template, Template, QAfterFilterCondition> dateEqualTo(
-      DateTime value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'date',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Template, Template, QAfterFilterCondition> dateGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'date',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Template, Template, QAfterFilterCondition> dateLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'date',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Template, Template, QAfterFilterCondition> dateBetween(
-    DateTime lower,
-    DateTime upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'date',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
   QueryBuilder<Template, Template, QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -415,6 +362,62 @@ extension TemplateQueryFilter
       ));
     });
   }
+
+  QueryBuilder<Template, Template, QAfterFilterCondition>
+      scheduledStartingTimeEqualTo(DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'scheduledStartingTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Template, Template, QAfterFilterCondition>
+      scheduledStartingTimeGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'scheduledStartingTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Template, Template, QAfterFilterCondition>
+      scheduledStartingTimeLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'scheduledStartingTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Template, Template, QAfterFilterCondition>
+      scheduledStartingTimeBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'scheduledStartingTime',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension TemplateQueryObject
@@ -424,18 +427,6 @@ extension TemplateQueryLinks
     on QueryBuilder<Template, Template, QFilterCondition> {}
 
 extension TemplateQuerySortBy on QueryBuilder<Template, Template, QSortBy> {
-  QueryBuilder<Template, Template, QAfterSortBy> sortByDate() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'date', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Template, Template, QAfterSortBy> sortByDateDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'date', Sort.desc);
-    });
-  }
-
   QueryBuilder<Template, Template, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -447,22 +438,23 @@ extension TemplateQuerySortBy on QueryBuilder<Template, Template, QSortBy> {
       return query.addSortBy(r'name', Sort.desc);
     });
   }
+
+  QueryBuilder<Template, Template, QAfterSortBy> sortByScheduledStartingTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'scheduledStartingTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Template, Template, QAfterSortBy>
+      sortByScheduledStartingTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'scheduledStartingTime', Sort.desc);
+    });
+  }
 }
 
 extension TemplateQuerySortThenBy
     on QueryBuilder<Template, Template, QSortThenBy> {
-  QueryBuilder<Template, Template, QAfterSortBy> thenByDate() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'date', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Template, Template, QAfterSortBy> thenByDateDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'date', Sort.desc);
-    });
-  }
-
   QueryBuilder<Template, Template, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -486,20 +478,34 @@ extension TemplateQuerySortThenBy
       return query.addSortBy(r'name', Sort.desc);
     });
   }
+
+  QueryBuilder<Template, Template, QAfterSortBy> thenByScheduledStartingTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'scheduledStartingTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Template, Template, QAfterSortBy>
+      thenByScheduledStartingTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'scheduledStartingTime', Sort.desc);
+    });
+  }
 }
 
 extension TemplateQueryWhereDistinct
     on QueryBuilder<Template, Template, QDistinct> {
-  QueryBuilder<Template, Template, QDistinct> distinctByDate() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'date');
-    });
-  }
-
   QueryBuilder<Template, Template, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<Template, Template, QDistinct>
+      distinctByScheduledStartingTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'scheduledStartingTime');
     });
   }
 }
@@ -512,15 +518,16 @@ extension TemplateQueryProperty
     });
   }
 
-  QueryBuilder<Template, DateTime, QQueryOperations> dateProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'date');
-    });
-  }
-
   QueryBuilder<Template, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
+    });
+  }
+
+  QueryBuilder<Template, DateTime, QQueryOperations>
+      scheduledStartingTimeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'scheduledStartingTime');
     });
   }
 }

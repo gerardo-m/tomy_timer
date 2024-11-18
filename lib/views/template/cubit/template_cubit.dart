@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
@@ -22,6 +23,20 @@ class TemplateCubit extends Cubit<TemplateState> {
       return;
     }
     _template = cand;
+    _emitValidState();
+  }
+
+  void changeScheduledTime(TimeOfDay time){
+    _template.scheduledStartingTime = _template.scheduledStartingTime.copyWith(hour: time.hour, minute: time.minute, second: 0);
+    _emitValidState();
+  }
+
+  void changeName(String name){
+    _template.name = name;
+  }
+
+  void finishedChangingName()async{
+    await _templatesService.saveTemplate(_template);
     _emitValidState();
   }
 

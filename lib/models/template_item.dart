@@ -19,6 +19,7 @@ class TemplateItem {
   int? ambarTime;
   int redTime;
 
+  @Index()
   int templateId;
 
   TemplateItem({

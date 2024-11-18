@@ -47,5 +47,10 @@ class TemplateItemsRepositoryIsar extends TemplateItemsRepository {
   Future<List<TemplateItem>> getAllTemplateItems() {
     return isar.templateItems.where().findAll();
   }
+  
+  @override
+  Future<List<TemplateItem>> getTemplateItems(int templateId) {
+    return isar.templateItems.where().templateIdEqualTo(templateId).findAll();
+  }
 
 }
