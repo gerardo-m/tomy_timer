@@ -5,3 +5,4 @@ export 'past_meetings/past_meetings_screen.dart';
 export 'settings/settings_screen.dart';
 export 'templates/templates_screen.dart';
 export 'template/template_screen.dart';
+export 'template_item/template_item_screen.dart';

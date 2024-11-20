@@ -18,5 +18,7 @@ class TomyTimerRoutes{
   static const templates = '/templates';
   /// id: required 
   static const template = '/template';
+  /// id: required
+  static const templateItem = '/template_item';
 }
   

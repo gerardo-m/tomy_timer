@@ -16,7 +16,7 @@ final class TemplatesValid extends TemplatesState{
   const TemplatesValid({required this.templates});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [templates];
 }
 
 final class TemplatesLoading extends TemplatesValid{

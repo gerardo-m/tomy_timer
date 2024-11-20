@@ -22,6 +22,7 @@ class TemplatesScreen extends StatelessWidget {
                   title: Text(template.name),
                   onTap: () async{
                      await Navigator.of(context).pushNamed(TomyTimerRoutes.template, arguments: {"id": template.id});
+                     await Future.delayed(const Duration(milliseconds: 500));
                      if (!context.mounted)return;
                     context.read<TemplatesCubit>().load();
                   },
@@ -33,6 +34,7 @@ class TemplatesScreen extends StatelessWidget {
               int? id = await context.read<TemplatesCubit>().createTemplate();
               if (!context.mounted)return;
               await Navigator.of(context).pushNamed(TomyTimerRoutes.template, arguments: {"id": id});
+              await Future.delayed(const Duration(milliseconds: 500));
               if (!context.mounted)return;
               context.read<TemplatesCubit>().load();
             },

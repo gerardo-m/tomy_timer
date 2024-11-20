@@ -6,6 +6,7 @@ import 'package:tomy_timer/views/meeting/cubit/meeting_cubit.dart';
 import 'package:tomy_timer/views/report/cubit/report_cubit.dart';
 import 'package:tomy_timer/views/settings/cubit/settings_cubit.dart';
 import 'package:tomy_timer/views/template/cubit/template_cubit.dart';
+import 'package:tomy_timer/views/template_item/cubit/template_item_cubit.dart';
 import 'package:tomy_timer/views/templates/cubit/templates_cubit.dart';
 import 'package:tomy_timer/views/views.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,8 @@ class TomyTimerRouteHandling {
         return _goTemplates(settings);
       case TomyTimerRoutes.template:
         return _goTemplate(settings);
+      case TomyTimerRoutes.templateItem:
+        return _goTemplateItem(settings);
       default:
         return MaterialPageRoute(
           builder: (context) {
@@ -127,6 +130,20 @@ class TomyTimerRouteHandling {
       return BlocProvider(
         create: (context) => TemplateCubit()..load(templateId),
         child: const TemplateScreen(),
+      );
+    });
+  }
+
+  static Route<dynamic> _goTemplateItem(RouteSettings settings) {
+    int? id;
+    if (settings.arguments != null) {
+      Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;
+      id = args["id"];
+    }
+    return MaterialPageRoute(builder: (context) {
+      return BlocProvider(
+        create: (context) => TemplateItemCubit()..load(id),
+        child: const TemplateItemScreen(),
       );
     });
   }

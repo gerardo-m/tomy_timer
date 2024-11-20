@@ -55,7 +55,8 @@
     - ~~Template item~~
     - ~~Template service and repository~~
     - ~~Template list page~~
-    - Template edit page
+    - ~~Template edit page~~
+    - Template item edit page
 - Load template
     - Implement template dialog for new meeting
     - Implement copying the template into a meeting
