@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:isar/isar.dart';
 import 'package:tomy_timer/models/meeting.dart';
 import 'package:tomy_timer/models/report_item.dart';
+import 'package:tomy_timer/utils/utils.dart';
 
 part 'report.g.dart';
 
@@ -32,7 +33,7 @@ class Report {
 
   factory Report.fromMeeting(Meeting meeting) {
     return Report(
-      id: Isar.autoIncrement,
+      id: Constants.newRecordId,
       scheduledStartTime: meeting.date,
       actualStartTime: meeting.startingTime ?? meeting.date,
       actualReportTime: DateTime.now(),

@@ -51,6 +51,10 @@ class TemplateScreen extends StatelessWidget {
                   },
                 ),
                 const Divider(),
+                const Padding(
+                  padding:  EdgeInsets.only(top:16),
+                  child:  Center(child: Text('Programa')),
+                ),
                 for (ETemplateItem item in state.items)
                   ListTile(
                     title: Text('${item.role} - ${item.name}'),

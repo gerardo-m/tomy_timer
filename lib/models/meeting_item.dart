@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:isar/isar.dart';
-import 'package:tomy_timer/utils/enums.dart';
+import 'package:tomy_timer/utils/utils.dart';
 part 'meeting_item.g.dart';
 
 @collection
@@ -39,7 +39,7 @@ class MeetingItem {
   });
 
   factory MeetingItem.createEmptyMeetingItem(int meetingId, int orderNumber){
-    return MeetingItem(id: Isar.autoIncrement, name: 'Nombre', role: 'Rol', iduration: 0, startTime: DateTime.now(), orderNumber: orderNumber, roleType: RoleType.nonSpeaker, redTime: const Duration(minutes: 1).inMilliseconds, meetingId: meetingId,);
+    return MeetingItem(id: Constants.newRecordId, name: 'Nombre', role: 'Rol', iduration: 0, startTime: DateTime.now(), orderNumber: orderNumber, roleType: RoleType.nonSpeaker, redTime: const Duration(minutes: 1).inMilliseconds, meetingId: meetingId,);
   }
 
   @ignore

@@ -1,8 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:isar/isar.dart';
 import 'package:tomy_timer/models/meeting_item.dart';
-
-import 'package:tomy_timer/utils/enums.dart';
+import 'package:tomy_timer/utils/utils.dart';
 
 part 'report_item.g.dart';
 
@@ -37,7 +36,7 @@ class ReportItem {
 
   factory ReportItem.fromMeetingItem(int reportId, MeetingItem meetingItem) {
     return ReportItem(
-      id: Isar.autoIncrement,
+      id: Constants.newRecordId,
       role: meetingItem.role,
       name: meetingItem.name,
       iMinTime: meetingItem.greenTime ?? 0,

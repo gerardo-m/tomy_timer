@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tomy_timer/utils/routes.dart';
 import 'package:tomy_timer/views/home/cubit/home_cubit.dart';
-import 'package:tomy_timer/views/meeting/clock/cubit/clock_cubit.dart';
 import 'package:tomy_timer/views/meeting/cubit/meeting_cubit.dart';
 import 'package:tomy_timer/views/report/cubit/report_cubit.dart';
 import 'package:tomy_timer/views/settings/cubit/settings_cubit.dart';
@@ -59,9 +58,6 @@ class TomyTimerRouteHandling {
     return MaterialPageRoute(builder: (context) {
       return MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create: (context) => ClockCubit()..load(),
-          ),
           BlocProvider(
             create: (context) => MeetingCubit()..load(meetingId),
           ),

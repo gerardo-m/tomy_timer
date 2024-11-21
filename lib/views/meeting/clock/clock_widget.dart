@@ -9,10 +9,12 @@ class ClockWidget extends StatelessWidget {
     super.key,
     this.startingDuration = Duration.zero,
     this.running = false,
+    this.milestoneEditable = true,
   });
 
   final Duration startingDuration;
   final bool running;
+  final bool milestoneEditable;
 
   final _mainText = const TextStyle(fontSize: 50, fontWeight: FontWeight.bold);
   final _secondText = const TextStyle(fontSize: 20);
@@ -45,12 +47,13 @@ class ClockWidget extends StatelessWidget {
                           ? '¡Se acabó el tiempo!'
                           : 'Próximo hito: ${state.nextMilestone.tommss()}',
                       style: _secondText),
-                  IconButton(
-                    onPressed: () {
-                      _showMilestoneDialog(context, state.meetingItem!);
-                    },
-                    icon: const Icon(Icons.edit),
-                  ),
+                  if (milestoneEditable)
+                    IconButton(
+                      onPressed: () {
+                        _showMilestoneDialog(context, state.meetingItem!);
+                      },
+                      icon: const Icon(Icons.edit),
+                    ),
                 ],
               ),
             ],

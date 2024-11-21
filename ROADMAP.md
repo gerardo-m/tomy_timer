@@ -56,9 +56,12 @@
     - ~~Template service and repository~~
     - ~~Template list page~~
     - ~~Template edit page~~
-    - Template item edit page
+    - ~~Template item edit page~~
+- ~~Improve home screen button~~
+    - ~~Improve UI~~
+    - ~~Take the clock cubit to the root application~~
+    - ~~Remove floating button~~
 - Load template
-    - Implement template dialog for new meeting
+    - ~~Implement template dialog for new meeting~~
     - Implement copying the template into a meeting
-- Take the clock cubit to the root application
-- Import from Tomy
+- Import from Tomy 

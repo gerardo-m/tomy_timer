@@ -40,34 +40,36 @@ class TemplateItemCubit extends Cubit<TemplateItemState> {
 
   void changeRoleType(RoleType rolyType){
     _item.roleType = rolyType;
-    _emitValidState();
+    save();
   }
 
-  void changeGreenTime(Duration duration){
+  void changeGreenTime(Duration duration)async{
     if (duration == Duration.zero){
       _item.greenTime = null;
     }else{
       _item.greenTime = duration.inMilliseconds;
     }
+    await _templatesService.saveTemplateItem(_item);
   }
 
-  void changeAmbarTime(Duration duration){
+  void changeAmbarTime(Duration duration)async{
     if (duration == Duration.zero){
       _item.ambarTime = null;
     }else{
       _item.ambarTime = duration.inMilliseconds;
     }
+    await _templatesService.saveTemplateItem(_item);
   }
 
-  void changeRedTime(Duration duration){
+  void changeRedTime(Duration duration)async{
     _item.redTime = duration.inMilliseconds;
+    await _templatesService.saveTemplateItem(_item);
   }
 
   void changeScheduledTime(TimeOfDay time)async{
     _loading();
     _item.scheduledStartTime = _item.scheduledStartTime.copyWith(hour: time.hour, minute: time.minute, second: 0);
-    await _templatesService.saveTemplateItem(_item);
-    _emitValidState();
+    save();
   }
 
   Future<void> save()async{
