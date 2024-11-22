@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:isar/isar.dart';
+import 'package:tomy_timer/models/template.dart';
 import 'package:tomy_timer/utils/constants.dart';
 part 'meeting.g.dart';
 
 @collection
 class Meeting {
-
   Id id;
   DateTime date;
   bool current;
@@ -20,17 +20,26 @@ class Meeting {
     this.startingTime,
   });
 
-  factory Meeting.createEmptyMeeting(){
+  factory Meeting.createEmptyMeeting() {
     return Meeting(id: Constants.newRecordId, date: DateTime.now(), selectedItem: 0);
   }
 
-  EMeeting toEMeeting(){
+  factory Meeting.fromTemplate(Template template) {
+    DateTime time = template.scheduledStartingTime;
+    return Meeting(
+      id: Constants.newRecordId,
+      date: DateTime.now(),
+      selectedItem: 0,
+      startingTime: DateTime.now().copyWith(hour: time.hour, minute: time.minute, second: 0),
+    );
+  }
+
+  EMeeting toEMeeting() {
     return EMeeting(id: id, date: date, current: current, selectedItem: selectedItem, startingTime: startingTime);
   }
 }
 
-class EMeeting with EquatableMixin{
-
+class EMeeting with EquatableMixin {
   final int id;
   final DateTime date;
   final bool current;
@@ -43,7 +52,7 @@ class EMeeting with EquatableMixin{
     required this.selectedItem,
     this.startingTime,
   });
-  
+
   @override
   List<Object?> get props => [id, date, current, selectedItem, startingTime];
 }

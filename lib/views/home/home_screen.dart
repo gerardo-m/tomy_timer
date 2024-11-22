@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tomy_timer/models/template.dart';
 import 'package:tomy_timer/utils/enums.dart';
 import 'package:tomy_timer/utils/routes.dart';
 import 'package:tomy_timer/views/home/cubit/home_cubit.dart';
@@ -102,7 +103,7 @@ class HomeScreen extends StatelessWidget {
       NewMeetingOptions? selectedOption = await _getNewMeetingOption(context);
       if (selectedOption == null) return;
       if (!context.mounted) return;
-      await _newMeeting(context, selectedOption);
+      await _newMeeting(context, selectedOption, state);
     } else {
       await Navigator.of(context).pushNamed(TomyTimerRoutes.meeting, arguments: {
         "id": state.currentMeeting?.id,
@@ -112,15 +113,19 @@ class HomeScreen extends StatelessWidget {
     }
   }
 
-  Future<void> _newMeeting(BuildContext context, NewMeetingOptions option)async{
+  Future<void> _newMeeting(BuildContext context, NewMeetingOptions option, HomeValid state) async {
     int? newMeetingId;
-    if (option == NewMeetingOptions.empty){
+    if (option == NewMeetingOptions.empty) {
       newMeetingId = await context.read<HomeCubit>().createNewMeeting();
     }
-    if (option == NewMeetingOptions.fromTemplate){
-      // TODO
+    if (option == NewMeetingOptions.fromTemplate) {
+      if (!context.mounted) return;
+      ETemplate? selectedTemplate = await _getSelectedTemplate(context, state);
+      if (selectedTemplate == null) return;
+      if (!context.mounted) return;
+      newMeetingId = await context.read<HomeCubit>().createMeetingFromTemplate(selectedTemplate.id);
     }
-    if (option ==NewMeetingOptions.fromTomy){
+    if (option == NewMeetingOptions.fromTomy) {
       // TODO
     }
     if (newMeetingId == null) return;
@@ -128,7 +133,35 @@ class HomeScreen extends StatelessWidget {
     await Navigator.of(context).pushNamed(TomyTimerRoutes.meeting, arguments: {"id": newMeetingId});
   }
 
-  Future<NewMeetingOptions?> _getNewMeetingOption(BuildContext context)async{
+  Future<ETemplate?> _getSelectedTemplate(BuildContext context, HomeValid state) async {
+    return showDialog<ETemplate>(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          children: [
+            if (state.templates.isEmpty)
+              Center(
+                child: Text(
+                  'No hay plantillas',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                ),
+              ),
+            for (ETemplate template in state.templates)
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.of(context).pop(template);
+                },
+                child: Text(template.name),
+              ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<NewMeetingOptions?> _getNewMeetingOption(BuildContext context) async {
     return showDialog<NewMeetingOptions>(
       context: context,
       builder: (context) {

@@ -42,7 +42,7 @@ Future<bool?> setup() async {
   di.registerLazySingleton<TemplateItemsRepository>(() => TemplateItemsRepositoryIsar(di()),);
 
   // Register your services here
-  di.registerLazySingleton<MeetingsService>(() => MeetingsService(di()));
+  di.registerLazySingleton<MeetingsService>(() => MeetingsService(di(),di(),di(),di()));
   di.registerLazySingleton<MeetingItemsService>(() => MeetingItemsService(di(), di()));
   di.registerLazySingleton<ReportsService>(() => ReportsService(di(), di(), di(), di()));
   di.registerLazySingleton<TemplatesService>(() => TemplatesService(di(), di()));

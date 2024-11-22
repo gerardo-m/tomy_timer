@@ -12,8 +12,9 @@ final class HomeInitial extends HomeState {}
 final class HomeValid extends HomeState{
 
   final EMeeting? currentMeeting;
+  final List<ETemplate> templates;
 
-  const HomeValid({required this.currentMeeting});
+  const HomeValid({required this.currentMeeting, required this.templates});
 
   @override
   List<Object?> get props => [currentMeeting];
@@ -21,7 +22,7 @@ final class HomeValid extends HomeState{
 }
 
 final class HomeLoading extends HomeValid{
-  const HomeLoading({required super.currentMeeting});
+  const HomeLoading({required super.currentMeeting, required super.templates});
 }
 
 final class HomeInvalid extends HomeState{}

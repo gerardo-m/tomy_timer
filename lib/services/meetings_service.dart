@@ -1,18 +1,40 @@
 import 'dart:async';
 
 import 'package:tomy_timer/models/meeting.dart';
+import 'package:tomy_timer/models/meeting_item.dart';
+import 'package:tomy_timer/models/template.dart';
+import 'package:tomy_timer/models/template_item.dart';
+import 'package:tomy_timer/repositories/meeting_items_repository.dart';
 import 'package:tomy_timer/repositories/meetings_repository.dart';
+import 'package:tomy_timer/repositories/template_items_repository.dart';
+import 'package:tomy_timer/repositories/templates_repository.dart';
 import 'package:tomy_timer/utils/constants.dart';
 
 class MeetingsService {
   MeetingsRepository meetingsRepository;
+  TemplatesRepository templatesRepository;
+  MeetingItemsRepository meetingItemsRepository;
+  TemplateItemsRepository templateItemsRepository;
 
   MeetingsService._({
     required this.meetingsRepository,
+    required this.templatesRepository,
+    required this.meetingItemsRepository,
+    required this.templateItemsRepository,
   });
 
-  factory MeetingsService(MeetingsRepository meetingsRepository) {
-    return MeetingsService._(meetingsRepository: meetingsRepository);
+  factory MeetingsService(
+    MeetingsRepository meetingsRepository,
+    TemplatesRepository templatesRepository,
+    MeetingItemsRepository meetingItemsRepository,
+    TemplateItemsRepository templateItemsRepository,
+  ) {
+    return MeetingsService._(
+      meetingsRepository: meetingsRepository,
+      templatesRepository: templatesRepository,
+      meetingItemsRepository: meetingItemsRepository,
+      templateItemsRepository: templateItemsRepository,
+    );
   }
 
   Future<List<Meeting>> loadMeetings() async {
@@ -24,9 +46,9 @@ class MeetingsService {
   }
 
   Future<Meeting?> saveMeeting(Meeting meeting) async {
-    if (meeting.id == Constants.newRecordId){
+    if (meeting.id == Constants.newRecordId) {
       return meetingsRepository.createMeeting(meeting);
-    }else{
+    } else {
       return meetingsRepository.updateMeeting(meeting);
     }
   }
@@ -35,7 +57,22 @@ class MeetingsService {
     return meetingsRepository.deleteMeeting(id);
   }
 
-  Future<Meeting?> getCurrentMeeting() async{
+  Future<Meeting?> getCurrentMeeting() async {
     return meetingsRepository.getCurrentMeeting();
+  }
+
+  /// Generates and SAVES a meeting from a template
+  Future<Meeting?> generateFromTemplate(int templateId) async {
+    Template? template = await templatesRepository.getTemplate(templateId);
+    if (template ==null )return null;
+    Meeting meeting = Meeting.fromTemplate(template);
+    Meeting? savedMeeting = await meetingsRepository.createMeeting(meeting);
+    if (savedMeeting == null) return null;
+    List<TemplateItem> templateItems = await templateItemsRepository.getTemplateItems(templateId);
+    for (TemplateItem templateItem in templateItems){
+      MeetingItem meetingItem = MeetingItem.createFromTemplateItem(savedMeeting.id, templateItem);
+      await meetingItemsRepository.createMeetingItem(meetingItem);
+    }
+    return savedMeeting;
   }
 }

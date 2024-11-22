@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:isar/isar.dart';
+import 'package:tomy_timer/models/template_item.dart';
 import 'package:tomy_timer/utils/utils.dart';
 part 'meeting_item.g.dart';
 
@@ -12,7 +13,7 @@ class MeetingItem {
   DateTime startTime;
   DateTime? scheduledStartTime;
   int orderNumber;
-  
+
   @enumerated
   RoleType roleType;
 
@@ -38,8 +39,35 @@ class MeetingItem {
     required this.meetingId,
   });
 
-  factory MeetingItem.createEmptyMeetingItem(int meetingId, int orderNumber){
-    return MeetingItem(id: Constants.newRecordId, name: 'Nombre', role: 'Rol', iduration: 0, startTime: DateTime.now(), orderNumber: orderNumber, roleType: RoleType.nonSpeaker, redTime: const Duration(minutes: 1).inMilliseconds, meetingId: meetingId,);
+  factory MeetingItem.createEmptyMeetingItem(int meetingId, int orderNumber) {
+    return MeetingItem(
+      id: Constants.newRecordId,
+      name: 'Nombre',
+      role: 'Rol',
+      iduration: 0,
+      startTime: DateTime.now(),
+      orderNumber: orderNumber,
+      roleType: RoleType.nonSpeaker,
+      redTime: const Duration(minutes: 1).inMilliseconds,
+      meetingId: meetingId,
+    );
+  }
+
+  factory MeetingItem.createFromTemplateItem(int meetingId, TemplateItem templateItem) {
+    return MeetingItem(
+      id: Constants.newRecordId,
+      name: templateItem.name,
+      role: templateItem.role,
+      iduration: 0,
+      startTime: templateItem.scheduledStartTime,
+      orderNumber: templateItem.orderNumber,
+      roleType: templateItem.roleType,
+      greenTime: templateItem.greenTime,
+      ambarTime: templateItem.ambarTime,
+      redTime: templateItem.redTime,
+      scheduledStartTime: templateItem.scheduledStartTime,
+      meetingId: meetingId,
+    );
   }
 
   @ignore
@@ -67,12 +95,12 @@ class MeetingItem {
     );
   }
 
-  Duration getNextMilestone(Duration currentDuration){
+  Duration getNextMilestone(Duration currentDuration) {
     int iCurrent = currentDuration.inMilliseconds;
-    if (greenTime != null){
+    if (greenTime != null) {
       if (iCurrent < greenTime!) return greenDuration!;
     }
-    if (ambarTime != null){
+    if (ambarTime != null) {
       if (iCurrent < ambarTime!) return ambarDuration!;
     }
     if (iCurrent < redTime) return redDuration;
@@ -114,5 +142,6 @@ class EMeetingItem with EquatableMixin {
   Duration get duration => Duration(milliseconds: iduration);
 
   @override
-  List<Object?> get props => [id, name, role, iduration, startTime, scheduledStartTime, orderNumber, roleType, greenTime, ambarTime, redTime];
+  List<Object?> get props =>
+      [id, name, role, iduration, startTime, scheduledStartTime, orderNumber, roleType, greenTime, ambarTime, redTime];
 }
