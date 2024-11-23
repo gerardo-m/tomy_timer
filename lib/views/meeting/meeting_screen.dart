@@ -96,9 +96,13 @@ class MeetingScreen extends StatelessWidget {
                           if (!context.mounted) return;
                           context.read<ClockCubit>().stop();
                           if (state.selectedItem == state.meetingItems.length - 1) {
-                            RoleType roleType = (await _getRoleType(context)) ?? RoleType.nonSpeaker;
+                            RoleType? roleType = await _getRoleType(context);
                             if (!context.mounted) return;
-                            await context.read<MeetingCubit>().setMilestones(roleType);
+                            if (roleType == null) {
+                              await _finishMeeting(context);
+                            } else {
+                              await context.read<MeetingCubit>().setMilestones(roleType);
+                            }
                             if (!context.mounted) return;
                           }
                           context.read<ClockCubit>().reset();
@@ -109,14 +113,14 @@ class MeetingScreen extends StatelessWidget {
                     ],
                   ),
                   Row(
-
                     children: [
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.of(context).pushNamed(TomyTimerRoutes.report, arguments: {"meeting_id": state.meeting.id});
+                              Navigator.of(context)
+                                  .pushNamed(TomyTimerRoutes.report, arguments: {"meeting_id": state.meeting.id});
                             },
                             child: const Text('Ver reporte'),
                           ),
@@ -127,17 +131,11 @@ class MeetingScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                           child: ElevatedButton(
                             onPressed: () async {
-                              bool? confirm = await showConfirmationDialog(context, 'Finalizar', '¿Está seguro de finalizar? No se podrá editar después de esta acción');
+                              bool? confirm = await showConfirmationDialog(context, 'Finalizar',
+                                  '¿Está seguro de finalizar? No se podrá editar después de esta acción');
                               if (!(confirm ?? false)) return;
                               if (!context.mounted) return;
-                              int? reportId = await context.read<MeetingCubit>().finishMeeting();
-                              if (!context.mounted) return;
-                              if (reportId == null){
-                                showErrorMessage(context, 'Ocurrió un error generando el reporte');
-                                return;
-                              }
-                              Navigator.of(context).pop();
-                              Navigator.of(context).pushNamed(TomyTimerRoutes.report, arguments: {"id": reportId});
+                              await _finishMeeting(context);
                             },
                             child: const Text('Finalizar'),
                           ),
@@ -154,12 +152,24 @@ class MeetingScreen extends StatelessWidget {
     });
   }
 
+  Future<void> _finishMeeting(BuildContext context) async {
+    int? reportId = await context.read<MeetingCubit>().finishMeeting();
+    if (!context.mounted) return;
+    if (reportId == null) {
+      showErrorMessage(context, 'Ocurrió un error generando el reporte');
+      return;
+    }
+    Navigator.of(context).pop();
+    Navigator.of(context).pushNamed(TomyTimerRoutes.report, arguments: {"id": reportId});
+  }
+
   Future<RoleType?> _getRoleType(BuildContext context) async {
     return showDialog<RoleType>(
       barrierDismissible: false,
       context: context,
       builder: (context) {
         return SimpleDialog(
+          title: const Text('Fue el último participante registrado. ¿Deseas agregar otro?'),
           children: [
             SimpleDialogOption(
               onPressed: () {
@@ -172,6 +182,12 @@ class MeetingScreen extends StatelessWidget {
                 Navigator.of(context).pop(RoleType.nonSpeaker);
               },
               child: const Text('Otro rol'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Finalizar reunión'),
             ),
           ],
         );

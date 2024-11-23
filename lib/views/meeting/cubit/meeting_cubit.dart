@@ -38,7 +38,7 @@ class MeetingCubit extends Cubit<MeetingState> {
     }
     _meetingItems = await _meetingItemsService.loadMeetingItems(_meeting.id);
     if (_meetingItems.isEmpty) _newMeetingItem();
-    _meeting.selectedItem = _meetingItems.length - 1;
+    if (_meeting.selectedItem >= _meetingItems.length) _meeting.selectedItem = _meetingItems.length -1;
     _emitValidState();
   }
 

@@ -5,6 +5,7 @@ import 'package:tomy_timer/utils/routes.dart';
 import 'package:tomy_timer/views/home/cubit/home_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tomy_timer/views/meeting/clock/clock_widget.dart';
+import 'package:tomy_timer/views/meeting/clock/cubit/clock_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -130,6 +131,7 @@ class HomeScreen extends StatelessWidget {
     }
     if (newMeetingId == null) return;
     if (!context.mounted) return;
+    context.read<ClockCubit>().reset();
     await Navigator.of(context).pushNamed(TomyTimerRoutes.meeting, arguments: {"id": newMeetingId});
   }
 

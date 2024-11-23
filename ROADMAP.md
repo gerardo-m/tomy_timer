@@ -64,5 +64,6 @@
 - Load template
     - ~~Implement template dialog for new meeting~~
     - ~~Implement copying the template into a meeting~~
-    - Fix the next item button to not create a new one
-- Import from Tomy 
+    - Fix the next item button to not create a new item
+- Import from Tomy
+- Fix current meeting when not finished.
