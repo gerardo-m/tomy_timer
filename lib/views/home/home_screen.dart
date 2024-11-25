@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:tomy_timer/models/template.dart';
 import 'package:tomy_timer/utils/enums.dart';
 import 'package:tomy_timer/utils/routes.dart';
@@ -128,6 +133,12 @@ class HomeScreen extends StatelessWidget {
     }
     if (option == NewMeetingOptions.fromTomy) {
       // TODO
+      if (!context.mounted) return;
+      String? meetingData = await _getQrCodeData(context);
+      // String? meetingData = await Navigator.of(context).pushNamed(TomyTimerRoutes.qrCode);
+      if (meetingData == null) return;
+      if (!context.mounted) return;
+      newMeetingId = await context.read<HomeCubit>().createMeetingFromTomy(meetingData);
     }
     if (newMeetingId == null) return;
     if (!context.mounted) return;
@@ -187,6 +198,32 @@ class HomeScreen extends StatelessWidget {
               },
               child: const Text('Copiar desde Tomy App'),
             ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<String?> _getQrCodeData(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          title: const Text('Escanea el código QR desde Tomy'),
+          children: [
+            SizedBox(
+              width: MediaQuery.sizeOf(context).width,
+              height: MediaQuery.sizeOf(context).width,
+              child: MobileScanner(
+                onDetect: (barcodes) {
+                  Uint8List? data = barcodes.barcodes[0].rawBytes;
+                  List<int> decodedData = GZipCodec().decode(data?.toList() ?? []);
+                  String fullData = utf8.decode(decodedData);
+                  Navigator.of(context).pop(fullData);
+                },
+                onDetectError: (error, stackTrace) => Navigator.of(context).pop(),
+              ),
+            )
           ],
         );
       },

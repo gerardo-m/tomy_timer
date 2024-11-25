@@ -56,6 +56,18 @@ class HomeCubit extends Cubit<HomeState> {
     return cand.id;
   }
 
+  Future<int?> createMeetingFromTomy(String data)async{
+    _loading();
+    Meeting? cand = await _meetingsService.generateFromTomy(data);
+    if (cand == null){
+       emit(HomeInvalid());
+       return null;
+    }
+    _currentMeeting = cand;
+    _emitValidState();
+    return cand.id;
+  }
+
   void _loading(){
     HomeState currentState = state;
     if (currentState is HomeValid){

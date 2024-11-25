@@ -6,3 +6,4 @@ export 'settings/settings_screen.dart';
 export 'templates/templates_screen.dart';
 export 'template/template_screen.dart';
 export 'template_item/template_item_screen.dart';
+export 'qr_code/qr_code_screen.dart';

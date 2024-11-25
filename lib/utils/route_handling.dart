@@ -29,6 +29,8 @@ class TomyTimerRouteHandling {
         return _goTemplate(settings);
       case TomyTimerRoutes.templateItem:
         return _goTemplateItem(settings);
+      case TomyTimerRoutes.qrCode:
+        return _goQrCode(settings);
       default:
         return MaterialPageRoute(
           builder: (context) {
@@ -142,5 +144,13 @@ class TomyTimerRouteHandling {
         child: const TemplateItemScreen(),
       );
     });
+  }
+
+  static Route<dynamic> _goQrCode(RouteSettings settings){
+     return MaterialPageRoute(
+      builder: (context){
+        return const QrCodeScreen();
+      }
+    );
   }
 }

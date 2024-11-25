@@ -20,5 +20,6 @@ class TomyTimerRoutes{
   static const template = '/template';
   /// id: required
   static const templateItem = '/template_item';
+  static const qrCode = 'qr_code';
 }
   
