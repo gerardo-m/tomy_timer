@@ -66,4 +66,6 @@
     - ~~Implement copying the template into a meeting~~
     - ~~Fix the next item button to not create a new item~~
 - ~~Import from Tomy~~
+- ~~Fix the report to not show items with 0 time~~
+- Show past meetings
 - Fix current meeting when not finished.

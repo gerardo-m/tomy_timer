@@ -62,7 +62,10 @@ class ReportsService {
   }
 
   Future<List<ReportItem>> getOutOfTimeMembers(int reportId)async{
-    return reportItemsRepository.getNonSpeakers(reportId);
+    List<ReportItem> items = await reportItemsRepository.getNonSpeakers(reportId);
+    items.removeWhere((item) => item.actualDuration <= item.maxDuration && item.actualDuration >= item.minDuration);
+    items.sort((a, b) => a.orderNumber.compareTo(b.orderNumber));
+    return items;
   }
 
   Future<Report?> generateFromMeetingAndSave(int meetingId)async{
@@ -97,7 +100,9 @@ class ReportsService {
       if (reportItem.roleType == RoleType.speaker) {
         report.speakers.add(reportItem);
       } else {
-        report.outOfTimeMembers.add(reportItem);
+        if (reportItem.actualDuration > reportItem.maxDuration || reportItem.actualDuration < reportItem.minDuration){
+          report.outOfTimeMembers.add(reportItem);
+        }
       }
     }
     return report;
