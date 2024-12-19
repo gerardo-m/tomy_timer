@@ -67,5 +67,6 @@
     - ~~Fix the next item button to not create a new item~~
 - ~~Import from Tomy~~
 - ~~Fix the report to not show items with 0 time~~
-- Show past meetings
+- ~~Show past meetings~~
+- Fix times not updating
 - Fix current meeting when not finished.

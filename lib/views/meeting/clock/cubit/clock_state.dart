@@ -18,6 +18,16 @@ final class ClockValid extends ClockState{
 
   const ClockValid({required this.duration, required this.startTime, required this.nextMilestone,  this.meetingItem, required this.color,});
 
+  ClockValid copyWith({Duration? duration, DateTime? startTime, Duration? nextMilestone, EMeetingItem? meetingItem, Color? color}){
+    return ClockValid(
+      duration: duration ?? this.duration,
+      startTime: startTime ?? this.startTime,
+      nextMilestone: nextMilestone ?? this.nextMilestone,
+      meetingItem: meetingItem ?? this.meetingItem,
+      color: color ?? this.color,
+    );
+  }
+
   @override
   List<Object?> get props => [duration, startTime, nextMilestone, meetingItem, color];
 }

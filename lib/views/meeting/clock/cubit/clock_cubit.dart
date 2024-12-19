@@ -74,6 +74,21 @@ class ClockCubit extends Cubit<ClockState> {
         color: Colors.transparent));
   }
 
+  void setMilestones(Duration? green, Duration? ambar, Duration red) async{
+    _meetingItem!.greenTime = green?.inMilliseconds;
+    _meetingItem!.ambarTime = ambar?.inMilliseconds;
+    _meetingItem!.redTime = red.inMilliseconds;
+    await _meetingItemsService.saveMeetingItem(_meetingItem!);
+    _nextMilestone = _meetingItem!.getNextMilestone(Duration.zero);
+    ClockState currentState = state;
+    if (currentState is ClockValid) {
+      emit(currentState.copyWith(
+        nextMilestone: _nextMilestone, 
+        meetingItem: _meetingItem?.toEMeetingItem(),
+      ));
+    }
+  }
+
   // void _loading(){
   //   ClockState currentState = state;
   //   if (currentState is ClockValid){
@@ -87,7 +102,7 @@ class ClockCubit extends Cubit<ClockState> {
     return super.close();
   }
 
-  Color getColor(){
+  Color getColor() {
     if (_nextMilestone == Duration.zero) return Colors.red;
     if (_nextMilestone == _meetingItem?.redDuration && _meetingItem?.ambarDuration != null) return Colors.yellow;
     if (_nextMilestone == _meetingItem?.ambarDuration && _meetingItem?.greenDuration != null) return Colors.green;

@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tomy_timer/utils/routes.dart';
 import 'package:tomy_timer/views/home/cubit/home_cubit.dart';
 import 'package:tomy_timer/views/meeting/cubit/meeting_cubit.dart';
+import 'package:tomy_timer/views/past_meetings/cubit/past_meetings_cubit.dart';
 import 'package:tomy_timer/views/report/cubit/report_cubit.dart';
 import 'package:tomy_timer/views/settings/cubit/settings_cubit.dart';
 import 'package:tomy_timer/views/template/cubit/template_cubit.dart';
@@ -96,7 +97,10 @@ class TomyTimerRouteHandling {
 
   static Route<dynamic> _goPastMeetings(RouteSettings settings) {
     return MaterialPageRoute(builder: (context) {
-      return const PastMeetingsScreen();
+      return BlocProvider(
+        create: (context) => PastMeetingsCubit()..load(),
+        child: const PastMeetingsScreen(),
+      );
     });
   }
 
@@ -146,11 +150,9 @@ class TomyTimerRouteHandling {
     });
   }
 
-  static Route<dynamic> _goQrCode(RouteSettings settings){
-     return MaterialPageRoute(
-      builder: (context){
-        return const QrCodeScreen();
-      }
-    );
+  static Route<dynamic> _goQrCode(RouteSettings settings) {
+    return MaterialPageRoute(builder: (context) {
+      return const QrCodeScreen();
+    });
   }
 }
