@@ -1,4 +1,4 @@
-enum HomeScreenOptions { templates, settings }
+enum HomeScreenOptions { templates, settings, about }
 
 enum RoleType { speaker, nonSpeaker }
 

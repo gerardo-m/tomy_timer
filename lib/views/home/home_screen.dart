@@ -34,6 +34,10 @@ class HomeScreen extends StatelessWidget {
                   value: HomeScreenOptions.settings,
                   child: Text('Ajustes'),
                 ),
+                const PopupMenuItem(
+                  value: HomeScreenOptions.about,
+                  child: Text('Acerca de'),
+                ),
               ],
               onSelected: (value) async {
                 switch (value) {
@@ -44,6 +48,14 @@ class HomeScreen extends StatelessWidget {
                     if (!context.mounted) return;
                     context.read<HomeCubit>().load();
                     break;
+                  case HomeScreenOptions.about:
+                    showAboutDialog(
+                      context: context,
+                      applicationName: 'Tomy Timer',
+                      applicationVersion: '0.1.0',
+                      applicationLegalese:
+                          'Desarrollado en Santa Cruz, Bolivia por: \n\nGerardo Miranda\nhttps://gerardomiranda.dev',
+                    );
                   default:
                 }
               },
@@ -132,7 +144,6 @@ class HomeScreen extends StatelessWidget {
       newMeetingId = await context.read<HomeCubit>().createMeetingFromTemplate(selectedTemplate.id);
     }
     if (option == NewMeetingOptions.fromTomy) {
-      // TODO
       if (!context.mounted) return;
       String? meetingData = await _getQrCodeData(context);
       // String? meetingData = await Navigator.of(context).pushNamed(TomyTimerRoutes.qrCode);

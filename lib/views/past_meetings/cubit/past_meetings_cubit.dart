@@ -16,6 +16,7 @@ class PastMeetingsCubit extends Cubit<PastMeetingsState> {
 
   void load()async{
     _reports = await _reportsService.loadReports();
+    _reports.sort((a, b) => b.actualReportTime.compareTo(a.actualReportTime));
     _emitValidState();
   }
 
