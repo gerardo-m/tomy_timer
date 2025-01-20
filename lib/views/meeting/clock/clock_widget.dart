@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tomy_timer/models/meeting_item.dart';
 import 'package:tomy_timer/utils/duration_extension.dart';
 import 'package:tomy_timer/views/meeting/clock/cubit/clock_cubit.dart';
+import 'package:tomy_timer/views/meeting/cubit/meeting_cubit.dart';
 
 class ClockWidget extends StatelessWidget {
   const ClockWidget({
@@ -102,7 +103,8 @@ class ClockWidget extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () async{
-                context.read<ClockCubit>().setMilestones(greenDuration, ambarDuration, redDuration); 
+                context.read<ClockCubit>().setMilestones(greenDuration, ambarDuration, redDuration);
+                context.read<MeetingCubit>().setMilestonesDuration(greenDuration, ambarDuration, redDuration);
                 Navigator.of(context).pop();
               },
               child: const Text('Aceptar'),

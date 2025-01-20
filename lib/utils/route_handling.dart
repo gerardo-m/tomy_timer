@@ -59,14 +59,8 @@ class TomyTimerRouteHandling {
       meetingId = args["id"];
     }
     return MaterialPageRoute(builder: (context) {
-      return MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => MeetingCubit()..load(meetingId),
-          ),
-        ],
-        child: const MeetingScreen(),
-      );
+      context.read<MeetingCubit>().load(meetingId);
+      return const MeetingScreen();
     });
   }
 

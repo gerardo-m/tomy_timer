@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tomy_timer/utils/theme.dart';
 import 'package:tomy_timer/utils/route_handling.dart';
 import 'package:tomy_timer/views/meeting/clock/cubit/clock_cubit.dart';
+import 'package:tomy_timer/views/meeting/cubit/meeting_cubit.dart';
 
 import 'dependency_injection.dart' as di;
 
@@ -17,8 +18,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ClockCubit()..load(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ClockCubit()..load(),
+        ),
+        BlocProvider(
+          create: (context) => MeetingCubit(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter Project Demo',
         theme: TomyTimerTheme.lightTheme,

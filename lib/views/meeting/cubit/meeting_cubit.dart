@@ -79,6 +79,15 @@ class MeetingCubit extends Cubit<MeetingState> {
     _emitValidState();
   }
 
+  Future<void> setMilestonesDuration(Duration? green, Duration? ambar, Duration red) async{
+    MeetingItem item = _meetingItems[_meeting.selectedItem];
+    item.greenTime = green?.inMilliseconds;
+    item.ambarTime = ambar?.inMilliseconds;
+    item.redTime = red.inMilliseconds;
+    await _meetingItemsService.saveMeetingItem(item);
+    _emitValidState();
+  }
+
   Future<void> setMilestones(RoleType roleType)async{
     MeetingItem item = _meetingItems[_meeting.selectedItem];
     if (roleType == RoleType.speaker){

@@ -76,23 +76,50 @@ class ReportScreen extends StatelessWidget {
                           children: [
                             TableRow(
                               children: [
-                                Text(speaker.role, style: _memberTitleStyle,),
-                                Text(speaker.name, style: _memberTitleStyle,),
+                                Text(
+                                  speaker.role,
+                                  style: _memberTitleStyle,
+                                ),
+                                Text(
+                                  speaker.name,
+                                  style: _memberTitleStyle,
+                                ),
                               ],
                             ),
                             TableRow(children: [
                               const Padding(
-                                padding:  EdgeInsets.only(left:8.0),
-                                child:  Text('Tiempo programado'),
+                                padding: EdgeInsets.only(left: 8.0),
+                                child: Text('Tiempo programado'),
                               ),
                               Text('${speaker.minDuration.tommss()} - ${speaker.maxDuration.tommss()}'),
                             ]),
                             TableRow(children: [
                               const Padding(
-                                padding:  EdgeInsets.only(left:8.0),
-                                child:  Text('Tiempo real'),
+                                padding: EdgeInsets.only(left: 8.0),
+                                child: Text('Tiempo real'),
                               ),
-                              Text(speaker.actualDuration.tommss()),
+                              Wrap(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Text(speaker.actualDuration.tommss()),
+                                  ),
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                          height: 12,
+                                          width: 12,
+                                          child: ColoredBox(color: getMarkColor(speaker)),
+                                        ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8.0),
+                                        child: Text(getSpeakerTimeMessage(speaker), overflow: TextOverflow.fade,),
+                                      ),
+                                    ],
+                                  )
+                                  
+                                ],
+                              ),
                             ]),
                           ],
                         ),
@@ -109,36 +136,56 @@ class ReportScreen extends StatelessWidget {
                   children: [
                     for (EReportItem outOfTime in state.outOfTimeMembers)
                       Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: Table(
-                            // columnWidths: const <int, TableColumnWidth>{
-                            //   1: FixedColumnWidth(64),
-                            // },
-                            children: [
-                              TableRow(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: Table(
+                          // columnWidths: const <int, TableColumnWidth>{
+                          //   1: FixedColumnWidth(64),
+                          // },
+                          children: [
+                            TableRow(
+                              children: [
+                                Text(
+                                  outOfTime.role,
+                                  style: _memberTitleStyle,
+                                ),
+                                Text(
+                                  outOfTime.name,
+                                  style: _memberTitleStyle,
+                                ),
+                              ],
+                            ),
+                            TableRow(children: [
+                              const Padding(
+                                padding: EdgeInsets.only(left: 8.0),
+                                child: Text('Tiempo programado'),
+                              ),
+                              Text('${outOfTime.minDuration.tommss()} - ${outOfTime.maxDuration.tommss()}'),
+                            ]),
+                            TableRow(children: [
+                              const Padding(
+                                padding: EdgeInsets.only(left: 8.0),
+                                child: Text('Tiempo real'),
+                              ),
+                              Row(
                                 children: [
-                                  Text(outOfTime.role, style: _memberTitleStyle,),
-                                  Text(outOfTime.name, style: _memberTitleStyle,),
+                                  Text(
+                                    outOfTime.actualDuration.tommss(),
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.only(left: 8.0),
+                                    child: SizedBox(
+                                      height: 12,
+                                      width: 12,
+                                      child: ColoredBox(color: Colors.red),
+                                    ),
+                                  )
                                 ],
                               ),
-                              TableRow(children: [
-                                const Padding(
-                                  padding:  EdgeInsets.only(left:8.0),
-                                  child:  Text('Tiempo programado'),
-                                ),
-                                Text('${outOfTime.minDuration.tommss()} - ${outOfTime.maxDuration.tommss()}'),
-                              ]),
-                              TableRow(children: [
-                                const Padding(
-                                  padding:  EdgeInsets.only(left:8.0),
-                                  child:  Text('Tiempo real'),
-                                ),
-                                Text(outOfTime.actualDuration.tommss()),
-                              ]),
-                            ],
-                          ),
-                        )
-                      // Text('${outOfTime.role}: ${outOfTime.actualDuration.tommss()} : ${outOfTime.maxDuration.tommss()}'),
+                            ]),
+                          ],
+                        ),
+                      )
+                    // Text('${outOfTime.role}: ${outOfTime.actualDuration.tommss()} : ${outOfTime.maxDuration.tommss()}'),
                   ],
                 ),
               ),
@@ -147,5 +194,23 @@ class ReportScreen extends StatelessWidget {
         ),
       );
     });
+  }
+
+  Color getMarkColor(EReportItem speaker) {
+    if (speaker.iActualTime > speaker.iMaxTime || speaker.iActualTime < speaker.iMinTime) {
+      return Colors.red;
+    } else {
+      return Colors.green;
+    }
+  }
+
+  String getSpeakerTimeMessage(EReportItem speaker) {
+    if (speaker.iActualTime > speaker.iMaxTime) {
+      return "Tiempo excedido";
+    }
+    if (speaker.iActualTime < speaker.iMinTime) {
+      return "Tiempo no alcanzado";
+    }
+    return "En tiempo";
   }
 }
